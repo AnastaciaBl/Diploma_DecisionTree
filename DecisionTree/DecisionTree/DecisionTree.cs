@@ -10,12 +10,10 @@ namespace DecisionTree
     {
         public DecisionTreeNode Head { get; set; }
         public string Name { get; set; }
-        public int AmountOfArguments { get; set; }
 
         public DecisionTree(List<string> trainingSampleLines)
         {
-            double[,] trainingSample = CreateTrainingSample(trainingSampleLines);
-            AmountOfArguments = trainingSample.GetLength(1)-1;
+            Data[] trainingSample = CreateTrainingSample(trainingSampleLines);
             Head = new DecisionTreeNode(trainingSample);
             Learn();
         }
@@ -52,11 +50,38 @@ namespace DecisionTree
         private void AddChildren(DecisionTreeNode node) //add new nodes to the tree
         {
             //Rule[0] - index of argument; Rule[1] - average argument value; Rule[2] - amount elements of LeftChild
-            double[,] left = new double[(int)node.Rule[2], node.Elements.GetLength(1)];
-            double[,] right = new double[node.AmountOfElements - (int)node.Rule[2], node.Elements.GetLength(1)];
+            Data[] left = new Data[(int)node.Rule[2]];
+            Data[] right = new Data[node.AmountOfElements - (int)node.Rule[2]];
             ReturnPartOfElements(left, right, node.Elements);
+            node.IsBigger = CheckSide(left, right);
             node.LeftChild = new DecisionTreeNode(left);
             node.RightChild = new DecisionTreeNode(right);
+        }
+
+        private bool CheckSide(Data[] left, Data[] right) //extra information about Rule (> or <=)
+        {
+            int amount = right.GetLength(0) / 10;
+            if (amount == 0)
+                amount = right.GetLength(0) / 2;
+            if (amount == 0)
+                amount = 1;
+            double counter = 0;
+            //!!! correct work only with one argument
+            for (int i=0;i<amount;i++)
+            {
+                if (left[left.Length - 1].Arguments[0] < right[i].Arguments[0])
+                    counter++;
+            }
+            if (counter / amount > 0.5)
+                return true;
+            else
+                return false;
+        }
+
+        private int ChooseArgument(Data[] elements)
+        {
+            //choose argument which separated elements with the smallest error
+            return 0;
         }
 
         private void CutUselessNodes()
@@ -65,18 +90,12 @@ namespace DecisionTree
             //cut leaves which doesn`t have a lot of influence on result
         }
 
-        private double[,] CreateTrainingSample(List<string> args)
+        private Data[] CreateTrainingSample(List<string> args)
         {
-            args[0] = args[0].Replace("\t", " ");
-            string[] amountOfArguments = args[0].Split(' ');
-            double[,] trainingSample = new double[args.Count - 1, amountOfArguments.Length];
+            Data[] trainingSample = new Data[args.Count-1];
             for (int i = 1; i < args.Count; i++) //args[0] = "y x1 x2 ... xN"
             {
-                args[i] = args[i].Replace("\t", " ");
-                string[] temp = args[i].Split(' ');
-                trainingSample[i - 1, 0] = Convert.ToDouble(temp[0]);
-                for (int j = 1; j < temp.Length; j++)
-                    trainingSample[i - 1, j] = Convert.ToDouble(temp[j]);
+                trainingSample[i-1] = new Data(args[i]);
             }
             return trainingSample;
         }
@@ -104,32 +123,32 @@ namespace DecisionTree
             return answer;
         }
 
-        private double CountError(double[,] elements)
+        private double CountError(Data[] elements)
         {
             double error = 0, answer = 0;
-            for(int i=0;i<elements.GetLength(0);i++)
+            for(int i=0;i<elements.Length;i++)
             {
-                error += elements[i, 0];
+                error += elements[i].Y;
             }
             error = error / elements.GetLength(0); //average of elements
-            for(int i = 0; i < elements.GetLength(0); i++) //find RSS sum of (Y_i - error)^2
+            for(int i = 0; i < elements.Length; i++) //find RSS sum of (Y_i - error)^2
             {
-                answer += Math.Pow((elements[i, 0] - error), 2); //elements[i, 0] -> Y, elements[i, 1..n] -> X
+                answer += Math.Pow((elements[i].Y - error), 2);
             }
-            return answer / elements.GetLength(0);
+            return answer / elements.Length;
         }
 
-        private double[] FindDefiningArgument(double[,] elements)
+        private double[] FindDefiningArgument(Data[] elements)
         {
             //to find the best splitting (with the smallest squares error`s difference)
             //we should check all splittings
             //then we find the argument which define this splitting
             List<double> errorList = new List<double>();
-            for(int i=0;i<elements.GetLength(0)-1;i++)
+            for(int i=0;i<elements.Length-1;i++)
             {
                 double error = 0;
-                double[,] tempFirst = new double[i + 1, elements.GetLength(1)];
-                double[,] tempSecond = new double[elements.GetLength(0) - i - 1, elements.GetLength(1)];
+                Data[] tempFirst = new Data[i + 1];
+                Data[] tempSecond = new Data[elements.Length - i - 1];
                 ReturnPartOfElements(tempFirst, tempSecond, elements);
                 error += CountError(tempFirst);
                 error += CountError(tempSecond);
@@ -138,22 +157,25 @@ namespace DecisionTree
             int index = FindIndexOfMinErrorSplitting(errorList);
             //[0] - index of argument; [1] - argument
             //!!! correct work only with one argument
-            return new double[3] { 1, ((elements[index,1] + elements[index + 1,1]) / 2), index + 1 };
+            return new double[3] { 1, ((elements[index].Arguments[0] + elements[index+1].Arguments[0]) / 2),
+                index + 1 };
         }
 
         //to split array on two parts
-        private void ReturnPartOfElements(double[,] elementsFirst, double[,] elementsSecond, double[,] elements)
+        private void ReturnPartOfElements(Data[] elementsFirst, Data[] elementsSecond, Data[] elements)
         {
-            int index = elements.GetLength(0) - elementsSecond.GetLength(0);
-            for(int i=0;i<elementsFirst.GetLength(0);i++)
+            int index = elements.Length - elementsSecond.Length;
+            for(int i=0;i<elementsFirst.Length; i++)
             {
-                for (int j = 0; j < elementsFirst.GetLength(1); j++)
-                    elementsFirst[i, j] = elements[i, j];
+                elementsFirst[i] = new Data(elements[i].AmountOfArguments);
+                for (int j = 0; j < elements[i].AmountOfArguments; j++)
+                    elementsFirst[i].Arguments[j] = elements[i].Arguments[j];
             }
-            for(int i=elements.GetLength(0)-1;i>=index;i--)
+            for(int i=elements.Length - 1;i>=index;i--)
             {
-                for (int j = 0; j < elementsSecond.GetLength(1); j++)
-                    elementsSecond[i-index, j] = elements[i, j];
+                elementsSecond[i - index] = new Data(elements[i].AmountOfArguments);
+                for (int j = 0; j < elements[i].AmountOfArguments; j++)
+                    elementsSecond[i-index].Arguments[j] = elements[i].Arguments[j];
             }
         }
 

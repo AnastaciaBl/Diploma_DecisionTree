@@ -13,7 +13,8 @@ namespace DecisionTree
         public int AmountOfElements { get; private set; }//how much elements this node has inside
         public double[] Rule { get; set; } //[0] - index of argument; [1] - average argument value; 
                                            //[2] - amount elements of LeftChild
-        public double[,] Elements { get; set; }
+        public bool IsBigger { get; set; } // > - true, <= - false                                  
+        public Data[] Elements { get; set; }
         public bool IsLeaf
         {
             get {
@@ -29,10 +30,10 @@ namespace DecisionTree
             Rule = new double[3];
         }
 
-        public DecisionTreeNode(double[,] elements):this()
+        public DecisionTreeNode(Data[] elements):this()
         {
             Elements = elements;
-            AmountOfElements = Elements.GetLength(0);
+            AmountOfElements = Elements.Length;
         }
 
         private bool Compute(double[] rule)
