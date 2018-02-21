@@ -8,12 +8,10 @@ namespace DecisionTree
 {
     class DecisionTreeNode
     { 
-        public DecisionTreeNode RightChild { get; set; } //the rule was executed
-        public DecisionTreeNode LeftChild { get; set; } //the rule wasn`t executed
+        public DecisionTreeNode RightChild { get; set; } //the rule was executed (>)
+        public DecisionTreeNode LeftChild { get; set; } //the rule wasn`t executed (<=)
         public int AmountOfElements { get; private set; }//how much elements this node has inside
-        public double[] Rule { get; set; } //[0] - index of argument; [1] - average argument value; 
-                                           //[2] - amount elements of LeftChild
-        public bool IsBigger { get; set; } // > - true, <= - false                                  
+        public Rule Rule { get; set; }
         public Data[] Elements { get; set; }
         public bool IsLeaf
         {
@@ -25,12 +23,9 @@ namespace DecisionTree
             }
         }
 
-        public DecisionTreeNode()
-        {
-            Rule = new double[3];
-        }
+        public DecisionTreeNode() { }
 
-        public DecisionTreeNode(Data[] elements):this()
+        public DecisionTreeNode(Data[] elements)
         {
             Elements = elements;
             AmountOfElements = Elements.Length;
