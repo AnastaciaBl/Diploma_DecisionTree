@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace DecisionTree
@@ -17,7 +14,8 @@ namespace DecisionTree
                 while (!sr.EndOfStream)
                     testSample.Add(sr.ReadLine());
             }
-            DecisionTree dt = new DecisionTree(testSample);            
+            DecisionTree dt = new DecisionTree(testSample);
+            Console.ReadLine();    
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DecisionTree
 {
@@ -37,6 +35,8 @@ namespace DecisionTree
                 switch (elements[0].IsQualitative[i])
                 {
                     case true:
+                        rulesQualitative =
+                            rulesQualitative.Concat(CreateRulesForQualitativeArguments(elements, i)).ToList();
                         break;
                     case false:
                         rulesNotQualitive =
@@ -45,6 +45,92 @@ namespace DecisionTree
                 }
             }
             return FindRuleWithTheSmallestError(rulesQualitative.Concat(rulesNotQualitive).ToList());
+        }
+
+        private List<Rule> CreateRulesForQualitativeArguments(Data[] elements, int indexOfArgument)
+        {
+            List<Rule> rules = new List<Rule>();
+            List<double> classes = new List<double>();
+            for(int i=0;i<elements.Length;i++)
+            {
+                if (!classes.Contains(elements[i].Arguments[indexOfArgument]))
+                    classes.Add(elements[i].Arguments[indexOfArgument]);
+            }
+            classes.Sort();
+            rules = GetPowerSetOfRules(classes, indexOfArgument);
+            CountErrorInQualitativeRules(rules, elements);
+            return rules;
+        }
+
+        #region Create sets of Qualitative Rules
+        private List<Rule> GetPowerSetOfRules(List<double> classes, int indexOfArgument)
+        {
+            List<string> set = CreateSetOfBinaryNumbers(classes);
+            List<Rule> uniqueRules = CreateSetOfUniqueRules(set, classes);
+            for(int i=0;i<uniqueRules.Count;i++)
+            {
+                uniqueRules[i].IndexOfArgument = indexOfArgument;
+                uniqueRules[i].IsQualitative = true;
+            }
+            return uniqueRules;
+        }
+
+        private List<string> CreateSetOfBinaryNumbers(List<double> list)
+        {
+            List<string> set = new List<string>();
+            for (int i = 0; i < Math.Pow(2, list.Count); i++)
+            {
+                string str = Convert.ToString(i, 2);
+                while (str.Length != list.Count)
+                    str = str.Insert(0, "0");
+                set.Add(str);
+            }
+            return set;
+        }
+
+        private List<Rule> CreateSetOfUniqueRules(List<string> list, List<double> classes)
+        {
+            List<Rule> allRules = CreateSetOfAllRules(list, classes);
+            List<Rule> uniqueRules = new List<Rule>();
+            for (int i = 0; i < allRules.Count; i++)
+            {
+                if (!(allRules[i].Rules.Count == 0 || allRules[i].Rules.Count == classes.Count))
+                {
+                    allRules[i].Rules.Sort();
+                    if (!uniqueRules.Contains(allRules[i]))
+                        uniqueRules.Add(allRules[i]);
+                }
+            }
+            return uniqueRules;
+        }
+
+        private List<Rule> CreateSetOfAllRules(List<string> list, List<double> classes)
+        {
+            List<Rule> rules = new List<Rule>();
+            for(int i=0;i<list.Count;i++)
+            {
+                Rule temp = new Rule();
+                for(int j=0;j<list[i].Length;j++)
+                {
+                    if (list[i][j] == '1')
+                        temp.Rules.Add(classes[j]);
+                }
+                rules.Add(temp);
+            }
+            return rules;
+        }
+        #endregion
+
+        private void CountErrorInQualitativeRules(List<Rule> rules, Data[] elements)
+        {
+            for(int i=0;i<rules.Count;i++)
+            {
+                Data[] left = null, right = null;
+                GeneralMethods.DivideSampleByQualitiveRule(out left, out right, elements, 
+                    rules[i].Rules, rules[i].IndexOfArgument);
+                rules[i].Error = GeneralMethods.CountError(left);
+                rules[i].Error += GeneralMethods.CountError(right);
+            }
         }
 
         private List<Rule> CreateRulesForNotQualitativeArguments(Data[] elements, int indexOfArgument)
@@ -61,7 +147,7 @@ namespace DecisionTree
                 else
                     temp.Rules.Add(valuesOfArgument[j]);
                 Data[] left = null, right = null;
-                DivideSampleByNotQualitiveRule(out left, out right, elements, temp.Rules[0], indexOfArgument);
+                GeneralMethods.DivideSampleByNotQualitiveRule(out left, out right, elements, temp.Rules[0], indexOfArgument);
                 temp.Error = GeneralMethods.CountError(left);
                 temp.Error += GeneralMethods.CountError(right);
                 rules.Add(temp);
@@ -81,22 +167,6 @@ namespace DecisionTree
         private double CreateValueForRule(double[] values, int index)
         {
             return (values[index] + values[index + 1]) / 2;
-        }
-
-        public void DivideSampleByNotQualitiveRule(out Data[] leftSample, out Data[] rightSample,
-                                                    Data[] elements, double rule, int argumentIndex)
-        {
-            List<Data> left = new List<Data>();
-            List<Data> right = new List<Data>();
-            for (int i = 0; i < elements.Length; i++)
-            {
-                if (elements[i].Arguments[argumentIndex] > rule)
-                    right.Add(elements[i]);
-                else
-                    left.Add(elements[i]);
-            }
-            leftSample = left.ToArray();
-            rightSample = right.ToArray();
         }
 
         private Rule FindRuleWithTheSmallestError(List<Rule> rules)

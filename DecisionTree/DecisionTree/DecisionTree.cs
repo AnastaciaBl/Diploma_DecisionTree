@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace DecisionTree
 {
@@ -28,7 +24,7 @@ namespace DecisionTree
             //build the tree using CART algorithm
             Queue<DecisionTreeNode> qe = new Queue<DecisionTreeNode>();
             qe.Enqueue(Head);
-            while (GeneralMethods.ErrorSum(Head) > 0)
+            while (ErrorSum() > 0)
             {
                 DecisionTreeNode tempNode = new DecisionTreeNode();
                 tempNode = qe.Dequeue();
@@ -49,15 +45,15 @@ namespace DecisionTree
 
         private void AddChildren(DecisionTreeNode node) //add new nodes to the tree
         {
-            //Rule[0] - index of argument; Rule[1] - average argument value; Rule[2] - amount elements of LeftChild
             Data[] left = null, right = null;
             if(node.Rule.IsQualitative)
             {
-
+                GeneralMethods.DivideSampleByQualitiveRule(out left, out right, node.Elements,
+                    node.Rule.Rules, node.Rule.IndexOfArgument);
             }
             else
             {
-                node.Rule.DivideSampleByNotQualitiveRule(out left, out right, node.Elements, 
+                GeneralMethods.DivideSampleByNotQualitiveRule(out left, out right, node.Elements, 
                     node.Rule.Rules[0], node.Rule.IndexOfArgument);
             }
             node.LeftChild = new DecisionTreeNode(left);
@@ -78,6 +74,29 @@ namespace DecisionTree
                 trainingSample[i-1] = new Data(args[i]);
             }
             return trainingSample;
+        }
+
+        private double ErrorSum()
+        {
+            //traversing the tree in breadth
+            //if the node is a leaf, count an error
+            double answer = 0;
+            Queue<DecisionTreeNode> qe = new Queue<DecisionTreeNode>();
+            qe.Enqueue(Head);
+            while (qe.Count != 0)
+            {
+                DecisionTreeNode tempNode = new DecisionTreeNode();
+                tempNode = qe.Dequeue();
+                if (tempNode.IsLeaf == true)
+                {
+                    answer += GeneralMethods.CountError(tempNode.Elements);
+                }
+                if (tempNode.LeftChild != null)
+                    qe.Enqueue(tempNode.LeftChild);
+                if (tempNode.RightChild != null)
+                    qe.Enqueue(tempNode.RightChild);
+            }
+            return answer;
         }
     }
 }

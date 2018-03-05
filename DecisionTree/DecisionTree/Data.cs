@@ -13,6 +13,15 @@ namespace DecisionTree
         public bool[] IsQualitative { get; private set; }
         public int AmountOfArguments { get; private set; }
 
+        //test
+        public Data(double[] args, double y, bool[] Is, int amount)
+        {
+            Arguments = args;
+            Y = y;
+            IsQualitative = Is;
+            AmountOfArguments = amount;
+        }
+
         public Data(int amountOfArgs)
         {
             AmountOfArguments = amountOfArgs;
