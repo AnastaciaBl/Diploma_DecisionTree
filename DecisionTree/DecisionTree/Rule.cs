@@ -25,6 +25,15 @@ namespace DecisionTree
             IsQualitative = temp.IsQualitative;
         }
 
+        public Rule(Rule rule):this()
+        {
+            Error = rule.Error;
+            for (int i = 0; i < rule.Rules.Count; i++)
+                Rules.Add(rule.Rules[i]);
+            IndexOfArgument = rule.IndexOfArgument;
+            IsQualitative = rule.IsQualitative;
+        }
+
         private Rule ChooseRule(Data[] elements)
         {
             //choose argument which separated elements with the smallest error
@@ -182,6 +191,12 @@ namespace DecisionTree
                 }
             }
             return temp;
+        }
+
+        public static double FindErrorInNode(Data[] elements, int allElements)
+        {
+            double error = GeneralMethods.CountError(elements) * elements.Length;
+            return error / allElements;
         }
     }
 }

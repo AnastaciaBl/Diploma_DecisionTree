@@ -33,6 +33,19 @@ namespace DecisionTree
             DataFromString(stringData);
         }
 
+        public Data(Data data)
+        {
+            Y = data.Y;
+            AmountOfArguments = data.AmountOfArguments;
+            Arguments = new double[AmountOfArguments];
+            IsQualitative = new bool[AmountOfArguments];
+            for (int i=0;i<AmountOfArguments;i++)
+            {
+                Arguments[i] = data.Arguments[i];
+                IsQualitative[i] = data.IsQualitative[i];
+            }
+        }
+
         //FOR V.2
         //need to think about missing values
         //create a check-function which define is this data has missing values

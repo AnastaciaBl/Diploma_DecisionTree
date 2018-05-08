@@ -6,17 +6,32 @@ namespace DecisionTree
     {
         public DecisionTreeNode Head { get; set; }
         public string Name { get; set; }
+        public double TreeError { get; private set; }
+        public double Penalty { get; private set; }
 
-        public DecisionTree(List<string> trainingSampleLines)
+        private DecisionTree() { }
+
+        public DecisionTree(List<string> trainingSampleLines, double penalty)
         {
             Data[] trainingSample = CreateTrainingSample(trainingSampleLines);
             Head = new DecisionTreeNode(trainingSample);
+            Head.IsHead = true;
+            Penalty = penalty;
             Learn();
+            CutUselessNodes();
         }
 
-        public DecisionTree(List<string> trainingSampleLines, string name):this(trainingSampleLines)
+        public DecisionTree(List<string> trainingSampleLines, string name, double penalty) :this(trainingSampleLines, penalty)
         {
             Name = name;
+        }
+
+        public DecisionTree(DecisionTree dt)
+        {
+            TreeError = dt.TreeError;
+            Penalty = dt.Penalty;
+            Name = dt.Name;
+            Head = DeepCopy(dt);
         }
 
         private void Learn()
@@ -24,7 +39,7 @@ namespace DecisionTree
             //build the tree using CART algorithm
             Queue<DecisionTreeNode> qe = new Queue<DecisionTreeNode>();
             qe.Enqueue(Head);
-            while (ErrorSum() > 0)
+            while (GeneralMethods.FindErrorSum(this) > 0)
             {
                 DecisionTreeNode tempNode = new DecisionTreeNode();
                 tempNode = qe.Dequeue();
@@ -36,6 +51,7 @@ namespace DecisionTree
                     qe.Enqueue(tempNode.RightChild);
                 }
             }
+            TreeError = GeneralMethods.FindErrorSum(this);
         }
 
         public void Deside()
@@ -56,14 +72,16 @@ namespace DecisionTree
                 GeneralMethods.DivideSampleByNotQualitiveRule(out left, out right, node.Elements, 
                     node.Rule.Rules[0], node.Rule.IndexOfArgument);
             }
-            node.LeftChild = new DecisionTreeNode(left);
-            node.RightChild = new DecisionTreeNode(right);
+            node.LeftChild = new DecisionTreeNode(left, true);
+            node.RightChild = new DecisionTreeNode(right, false);
         }
 
         private void CutUselessNodes()
         {
             //improve the tree
             //cut leaves which doesn`t have a lot of influence on result
+            PostPruningAlgorithm algorithm = new PostPruningAlgorithm(this, Penalty);
+            Head = algorithm.TheBestTree.Head;
         }
 
         private Data[] CreateTrainingSample(List<string> args)
@@ -76,27 +94,85 @@ namespace DecisionTree
             return trainingSample;
         }
 
-        private double ErrorSum()
+        private DecisionTreeNode DeepCopy(DecisionTree copyTree)
         {
-            //traversing the tree in breadth
-            //if the node is a leaf, count an error
-            double answer = 0;
+            DecisionTree newDecisionTree = new DecisionTree();
+            newDecisionTree.Head = new DecisionTreeNode(copyTree.Head);
             Queue<DecisionTreeNode> qe = new Queue<DecisionTreeNode>();
-            qe.Enqueue(Head);
+            qe.Enqueue(copyTree.Head);
             while (qe.Count != 0)
             {
-                DecisionTreeNode tempNode = new DecisionTreeNode();
-                tempNode = qe.Dequeue();
-                if (tempNode.IsLeaf == true)
+                int positionOfNode = -1;
+                DecisionTreeNode tempNode = qe.Dequeue();
+                if (tempNode != copyTree.Head)
                 {
-                    answer += GeneralMethods.CountError(tempNode.Elements);
+                    positionOfNode = getPositionOfActiveNode(copyTree.Head, tempNode, tempNode.IsLeft);
+                    copyNode(positionOfNode, newDecisionTree.Head, tempNode, tempNode.IsLeft);
+                }
+                if (tempNode.LeftChild != null) qe.Enqueue(tempNode.LeftChild);
+                if (tempNode.LeftChild != null) qe.Enqueue(tempNode.RightChild);
+            }
+            return newDecisionTree.Head;
+        }
+
+        //проходи по дереву и выясняем каокму "по счету" узлу будем присваивать "детей" при копировании
+        private int getPositionOfActiveNode(DecisionTreeNode head, DecisionTreeNode node, bool isLeft)
+        {
+            int index = 0;
+            Queue<DecisionTreeNode> qe = new Queue<DecisionTreeNode>();
+            qe.Enqueue(head);
+            while (qe.Count != 0)
+            {
+                DecisionTreeNode tempNode = qe.Dequeue();
+                if (isLeft)
+                {
+                    if (tempNode.LeftChild == node)
+                        break;
+                }
+                else
+                {
+                    if (tempNode.RightChild == node)
+                        break;
                 }
                 if (tempNode.LeftChild != null)
                     qe.Enqueue(tempNode.LeftChild);
                 if (tempNode.RightChild != null)
                     qe.Enqueue(tempNode.RightChild);
+                index++;
             }
-            return answer;
+            return index;
+        }
+
+        private void copyNode(int position, DecisionTreeNode head, DecisionTreeNode node, bool isLeft)
+        {
+            int currentPosition = 0;
+            Queue<DecisionTreeNode> qe = new Queue<DecisionTreeNode>();
+            qe.Enqueue(head);
+            while (true)
+            {
+                DecisionTreeNode tempNode = qe.Dequeue();
+                if (currentPosition == position)
+                {
+                    if (isLeft)
+                    {
+                        tempNode.LeftChild = new DecisionTreeNode(node);
+                        break;
+                    }
+                    else
+                    {
+                        tempNode.RightChild = new DecisionTreeNode(node);
+                        break;
+                    }
+                }
+                else
+                {
+                    if (tempNode.LeftChild != null)
+                        qe.Enqueue(tempNode.LeftChild);
+                    if (tempNode.RightChild != null)
+                        qe.Enqueue(tempNode.RightChild);
+                }
+                currentPosition++;
+            }
         }
     }
 }

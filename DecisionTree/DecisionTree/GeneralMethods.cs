@@ -5,6 +5,29 @@ namespace DecisionTree
 {
     static class GeneralMethods
     {
+        public static double FindErrorSum(DecisionTree tree)
+        {
+            //traversing the tree in breadth
+            //if the node is a leaf, count an error
+            double answer = 0;
+            Queue<DecisionTreeNode> qe = new Queue<DecisionTreeNode>();
+            qe.Enqueue(tree.Head);
+            while (qe.Count != 0)
+            {
+                DecisionTreeNode tempNode = new DecisionTreeNode();
+                tempNode = qe.Dequeue();
+                if (tempNode.IsLeaf == true)
+                {
+                    answer += CountError(tempNode.Elements);
+                }
+                if (tempNode.LeftChild != null)
+                    qe.Enqueue(tempNode.LeftChild);
+                if (tempNode.RightChild != null)
+                    qe.Enqueue(tempNode.RightChild);
+            }
+            return answer;
+        }
+
         public static double CountError(Data[] elements)
         {
             double error = 0, answer = 0;
