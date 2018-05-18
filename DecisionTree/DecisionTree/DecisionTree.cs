@@ -13,8 +13,9 @@ namespace DecisionTree
 
         public DecisionTree(List<string> trainingSampleLines, double penalty)
         {
-            Data[] trainingSample = CreateTrainingSample(trainingSampleLines);
-            Head = new DecisionTreeNode(trainingSample);
+            Data[] sample = CreateDataSample(trainingSampleLines);
+            Test test = new Test(sample);
+            Head = new DecisionTreeNode(test.trainingSample);
             Head.IsHead = true;
             Penalty = penalty;
             Learn();
@@ -84,7 +85,7 @@ namespace DecisionTree
             Head = algorithm.TheBestTree.Head;
         }
 
-        private Data[] CreateTrainingSample(List<string> args)
+        private Data[] CreateDataSample(List<string> args)
         {
             Data[] trainingSample = new Data[args.Count-1];
             for (int i = 1; i < args.Count; i++) //args[0] = "y x1 x2 ... xN"
