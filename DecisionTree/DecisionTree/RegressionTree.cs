@@ -2,16 +2,16 @@
 
 namespace DecisionTree
 {
-    class DecisionTree
+    class RegressionTree
     {
         public DecisionTreeNode Head { get; set; }
         public string Name { get; set; }
         public double TreeError { get; private set; }
         public double Penalty { get; private set; }
 
-        private DecisionTree() { }
+        private RegressionTree() { }
 
-        public DecisionTree(List<string> trainingSampleLines, double penalty)
+        public RegressionTree(List<string> trainingSampleLines, double penalty)
         {
             Data[] sample = CreateDataSample(trainingSampleLines);
             Test test = new Test(sample);
@@ -22,12 +22,12 @@ namespace DecisionTree
             CutUselessNodes(test.TestSample);
         }
 
-        public DecisionTree(List<string> trainingSampleLines, string name, double penalty) :this(trainingSampleLines, penalty)
+        public RegressionTree(List<string> trainingSampleLines, string name, double penalty) :this(trainingSampleLines, penalty)
         {
             Name = name;
         }
 
-        public DecisionTree(DecisionTree dt)
+        public RegressionTree(RegressionTree dt)
         {
             TreeError = dt.TreeError;
             Penalty = dt.Penalty;
@@ -136,9 +136,9 @@ namespace DecisionTree
             return trainingSample;
         }
 
-        private DecisionTreeNode DeepCopy(DecisionTree copyTree)
+        private DecisionTreeNode DeepCopy(RegressionTree copyTree)
         {
-            DecisionTree newDecisionTree = new DecisionTree();
+            RegressionTree newDecisionTree = new RegressionTree();
             newDecisionTree.Head = new DecisionTreeNode(copyTree.Head);
             Queue<DecisionTreeNode> qe = new Queue<DecisionTreeNode>();
             qe.Enqueue(copyTree.Head);

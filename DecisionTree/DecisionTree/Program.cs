@@ -14,7 +14,7 @@ namespace DecisionTree
                 while (!sr.EndOfStream)
                     testSample.Add(sr.ReadLine());
             }
-            DecisionTree dt = new DecisionTree(testSample, 0.1);
+            RegressionTree dt = new RegressionTree(testSample, 0.1);
             Console.WriteLine(dt.Deside(30.38));
             Console.ReadLine();    
         }
