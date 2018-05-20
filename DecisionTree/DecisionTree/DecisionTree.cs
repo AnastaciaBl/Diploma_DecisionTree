@@ -15,11 +15,11 @@ namespace DecisionTree
         {
             Data[] sample = CreateDataSample(trainingSampleLines);
             Test test = new Test(sample);
-            Head = new DecisionTreeNode(test.trainingSample);
+            Head = new DecisionTreeNode(test.TrainingSample);
             Head.IsHead = true;
             Penalty = penalty;
             Learn();
-            CutUselessNodes();
+            CutUselessNodes(test.TestSample);
         }
 
         public DecisionTree(List<string> trainingSampleLines, string name, double penalty) :this(trainingSampleLines, penalty)
@@ -55,9 +55,50 @@ namespace DecisionTree
             TreeError = GeneralMethods.FindErrorSum(this);
         }
 
-        public void Deside()
+        public double Deside(params double[] x)
         {
             //give an answer
+            DecisionTreeNode tempNode = findLeafWithAnswer(x);
+            double answer = countFinalAverageAnswer(tempNode);
+            return answer;
+        }
+
+        private DecisionTreeNode findLeafWithAnswer(params double[] x)
+        {
+            Queue<DecisionTreeNode> qe = new Queue<DecisionTreeNode>();
+            qe.Enqueue(Head);
+            DecisionTreeNode tempNode = new DecisionTreeNode();
+            tempNode = qe.Dequeue();
+            while (!tempNode.IsLeaf)
+            {
+                if (tempNode.Rule.IsQualitative)
+                {
+                    if (tempNode.Rule.Rules.Contains(x[tempNode.Rule.IndexOfArgument]))
+                        qe.Enqueue(tempNode.RightChild);
+                    else
+                        qe.Enqueue(tempNode.LeftChild);
+                }
+                else
+                {
+                    if (x[tempNode.Rule.IndexOfArgument] > tempNode.Rule.Rules[0])
+                        qe.Enqueue(tempNode.RightChild);
+                    else
+                        qe.Enqueue(tempNode.LeftChild);
+                }
+                tempNode = qe.Dequeue();
+            }
+            return tempNode;
+        }
+
+        private double countFinalAverageAnswer(DecisionTreeNode node)
+        {
+            double answer = 0;
+            for(int i=0;i<node.Elements.Length;i++)
+            {
+                answer += node.Elements[i].Y;
+            }
+            answer = answer / node.Elements.Length;
+            return answer;
         }
 
         private void AddChildren(DecisionTreeNode node) //add new nodes to the tree
@@ -77,11 +118,11 @@ namespace DecisionTree
             node.RightChild = new DecisionTreeNode(right, false);
         }
 
-        private void CutUselessNodes()
+        private void CutUselessNodes(Data[] testSample)
         {
             //improve the tree
             //cut leaves which doesn`t have a lot of influence on result
-            PostPruningAlgorithm algorithm = new PostPruningAlgorithm(this, Penalty);
+            PostPruningAlgorithm algorithm = new PostPruningAlgorithm(this, Penalty, testSample);
             Head = algorithm.TheBestTree.Head;
         }
 

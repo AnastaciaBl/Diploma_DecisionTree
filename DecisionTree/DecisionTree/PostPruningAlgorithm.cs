@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DecisionTree
 {
@@ -14,18 +12,18 @@ namespace DecisionTree
         private double penalty;
         public DecisionTree TheBestTree;
 
-        public PostPruningAlgorithm(DecisionTree startTree, double penaltyForComplicatedTree)
+        public PostPruningAlgorithm(DecisionTree startTree, double penaltyForComplicatedTree, Data[] testSample)
         {
             amountOfElementsInDataSet = startTree.Head.AmountOfElements;
             trees = new List<DecisionTree>();
             valueOfTree = new List<double>();
             penalty = penaltyForComplicatedTree;
             trees.Add(startTree);
-            valueOfTree.Add(findValueOfTree(startTree));
-            TheBestTree = cutUselessNodes();
+            valueOfTree.Add(findValueOfTree(startTree, testSample));
+            TheBestTree = cutUselessNodes(testSample);
         }
 
-        private DecisionTree cutUselessNodes()
+        private DecisionTree cutUselessNodes(Data[] testSample)
         {
             List<double> values = findValuesOfNodes(trees[0]);
             int amountOfTrees = values.Count;
@@ -36,16 +34,16 @@ namespace DecisionTree
                 trees.Add(createNewTree(trees[i-1], index));
                 values.RemoveAt(index);
             }
-            int indexOfTheBestTree = findIndexOfTheBestTree(trees);
+            int indexOfTheBestTree = findIndexOfTheBestTree(trees, testSample);
             return trees[indexOfTheBestTree];
         }
 
-        private int findIndexOfTheBestTree(List<DecisionTree> trees)
+        private int findIndexOfTheBestTree(List<DecisionTree> trees, Data[] testSample)
         {
             int indexOfTheBestTree = -1;
             List<double> values = new List<double>();
             for (int i = 0; i < trees.Count; i++)
-                values.Add(findValueOfTree(trees[i]));
+                values.Add(findValueOfTree(trees[i], testSample));
             double min = values.Min();
             for(int i = 0; i < values.Count; i++)
             {
@@ -60,10 +58,10 @@ namespace DecisionTree
             return indexOfTheBestTree;
         }
         
-        private double findValueOfTree(DecisionTree tree)
+        private double findValueOfTree(DecisionTree tree, Data[] testSample)
         {
             double value = -1;
-            value = findErrorSumOfLeaves(tree.Head) + penalty * findAmountOfLeaves(tree.Head);
+            value = findErrorOfTree(tree, testSample) + penalty * findAmountOfLeaves(tree.Head);
             return value;
         }
 
@@ -86,15 +84,6 @@ namespace DecisionTree
             return values;
         }
 
-        private double findInfluenseOfNode(DecisionTreeNode node)
-        {
-            int amountOfLeaves = findAmountOfLeaves(node);
-            double sumLeavesError = findErrorSumOfLeaves(node);
-            double value = (Rule.FindErrorInNode(node.Elements, amountOfElementsInDataSet) - sumLeavesError)/
-                (amountOfLeaves - 1);
-            return value;
-        }
-
         private double findErrorSumOfLeaves(DecisionTreeNode node)
         {
             double error = 0;
@@ -115,6 +104,27 @@ namespace DecisionTree
                 }
             }
             return error;
+        }
+
+        private double findInfluenseOfNode(DecisionTreeNode node)
+        {
+            int amountOfLeaves = findAmountOfLeaves(node);
+            double sumLeavesError = findErrorSumOfLeaves(node);
+            double value = (Rule.FindErrorInNode(node.Elements, amountOfElementsInDataSet) - sumLeavesError)/
+                (amountOfLeaves - 1);
+            return value;
+        }
+
+        private double findErrorOfTree(DecisionTree tree, Data[] testSample)
+        {
+            double error = 0;
+            for(int i=0;i<testSample.Length;i++)
+            {
+                double treeAnswer = tree.Deside(testSample[i].Arguments);
+                double absoluteError = Math.Abs(treeAnswer - testSample[i].Y);
+                error += absoluteError * absoluteError;
+            }
+            return Math.Sqrt(error);
         }
 
         private int findAmountOfLeaves(DecisionTreeNode node)
