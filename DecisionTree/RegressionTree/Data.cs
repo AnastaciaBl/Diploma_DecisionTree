@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DecisionTree
 {
-    class Data
+    public class Data
     {
         public double[] Arguments { get; private set; } // x1, ..., xN
         public double Y { get; private set; } // value of function

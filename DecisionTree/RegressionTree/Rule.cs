@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DecisionTree
 {
-    class Rule
+    public class Rule
     {
         public double Error { get; set; }
         public List<double> Rules { get; set; }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DecisionTree
 {
-    static class GeneralMethods
+    public static class GeneralMethods
     {
         public static double FindErrorSum(RegressionTree tree)
         {

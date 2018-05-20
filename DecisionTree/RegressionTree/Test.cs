@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DecisionTree
 {
-    class Test
+    public class Test
     {
         public Data[] TrainingSample { get; private set; }
         public Data[] TestSample { get; private set; }

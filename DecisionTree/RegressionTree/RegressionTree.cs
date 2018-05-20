@@ -2,7 +2,7 @@
 
 namespace DecisionTree
 {
-    class RegressionTree
+    public class RegressionTree
     {
         public DecisionTreeNode Head { get; set; }
         public string Name { get; set; }

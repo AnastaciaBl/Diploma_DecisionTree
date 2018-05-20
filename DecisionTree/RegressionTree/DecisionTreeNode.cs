@@ -1,6 +1,6 @@
 ﻿namespace DecisionTree
 {
-    class DecisionTreeNode
+    public class DecisionTreeNode
     {
         public bool IsHead { get; set; }
         public bool IsLeft { get; private set; }
