@@ -16,11 +16,10 @@ namespace DiplomaRegressionTree
     {
         public RegressionTree Tree { get; set; }
         public const double Penalty = 0.1;
-        private const int minStepForNodeVisualization = 30;
 
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         private void btnOpenFile_Click(object sender, EventArgs e)
@@ -38,7 +37,6 @@ namespace DiplomaRegressionTree
                 Tree = new RegressionTree(linesFromFile, Penalty);
             }
             fillRegressionChart();
-            buildTree();
         }
 
         private void fillRegressionChart()
@@ -138,140 +136,10 @@ namespace DiplomaRegressionTree
             return answer;
         }
 
-        private void buildTree()
+        private void btnDraw_Click(object sender, EventArgs e)
         {
-            int depthOfTree = findDepth(1, Tree.Head);
-            int amountOfNodesOnLastLayer = findAmountOfElementsInLastLayer(depthOfTree);
-            DecisionTreeNode[][] nodesForDraw = createArrayOfLayersWithNodes(depthOfTree);
-            int widthStep, heightStep;
-            findStepOfNodeShift(out widthStep, out heightStep, depthOfTree, amountOfNodesOnLastLayer);
-            drawNode(Tree.Head, 50, 0);
-            //for (int i = nodesForDraw.Length - 1; i >= 0; i--)
-            //{
-            //    int height = pictureBoxPaintTree.Height;
-            //    int width = (nodesForDraw[depthOfTree - 1].Length - nodesForDraw[i].Length) * widthStep;
-            //    for (int j = 0; j < nodesForDraw[i].Length; j++)
-            //    {
-            //        drawNode(nodesForDraw[i][j], width, height);
-            //        width += widthStep;
-            //    }
-            //    height -= heightStep;
-            //}
-            //drawNode(Tree.Head, (int)pictureBoxPaintTree.Width / 2, 0);
-        }
-
-        private void drawNode(DecisionTreeNode node, int x, int y)
-        {
-            if (node != null)
-            {
-                Graphics g = Graphics.FromHwnd(pictureBoxPaintTree.Handle);
-                g.DrawEllipse(new Pen(Color.Black, 2), x, y, 5, 5);
-                g.DrawString(createTextOfRule(node), this.Font, new SolidBrush(Color.Black), x + 10, y);
-            }
-        }
-
-        private int findDepth(int d, DecisionTreeNode node)
-        {
-            int a = 0, b = 0;
-            if (node.LeftChild != null)
-                a = findDepth(d + 1, node.LeftChild);
-            if(node.RightChild != null)
-                b = findDepth(d + 1, node.RightChild);
-
-            if (a > d && a > b) return a;
-            if (b > d) return b;
-            return d;
-        }
-
-        private int findAmountOfElementsInLastLayer(int depthOfTree)
-        {
-            int amountOfNodesOnLastLayer = 1;
-            for (int i = 1; i < depthOfTree; i++)
-                amountOfNodesOnLastLayer = amountOfNodesOnLastLayer * 2;
-            return amountOfNodesOnLastLayer;
-        }
-
-        private void findStepOfNodeShift(out int widthStep, out int heightStep, int depthOfTree, int amountOfNodesOnLastLayer)
-        {
-            int minWidth = 0, minHigth = 0;
-            findSizeOfMinSpaceForTree(ref minWidth, ref minHigth, depthOfTree, amountOfNodesOnLastLayer);
-            if (minWidth > pictureBoxPaintTree.Width)
-            {
-                pictureBoxPaintTree.Width = minWidth;
-                widthStep = minStepForNodeVisualization;
-            }
-            else widthStep = pictureBoxPaintTree.Width / amountOfNodesOnLastLayer;
-            if (minHigth > pictureBoxPaintTree.Height)
-            {
-                pictureBoxPaintTree.Height = minHigth;
-                heightStep = minStepForNodeVisualization;
-            }
-            else heightStep = pictureBoxPaintTree.Height / depthOfTree;
-        }
-
-        private void findSizeOfMinSpaceForTree(ref int width, ref int height, int depthOfTree, int amountOfNodesOnLastLayer)
-        {
-            width = minStepForNodeVisualization * amountOfNodesOnLastLayer;
-            height = minStepForNodeVisualization * depthOfTree;
-        }
-
-        //private bool isNeedToChangePixtureBoxSize(int minWidth, int minHight)
-        //{
-        //    if (minWidth > pictureBoxPaintTree.Width || minHight > pictureBoxPaintTree.Height)
-        //        return true;
-        //    else return false;
-        //}
-
-        private DecisionTreeNode[][] createArrayOfLayersWithNodes(int depthOfTree)
-        {
-            DecisionTreeNode[][] arrayOfLayers = new DecisionTreeNode[depthOfTree][];
-            arrayOfLayers[0] = new DecisionTreeNode[1];
-            for (int i=1;i<arrayOfLayers.Length;i++)
-            {
-                arrayOfLayers[i] = new DecisionTreeNode[arrayOfLayers[i - 1].Length * 2];
-            }
-            arrayOfLayers[0][0] = Tree.Head;
-            for(int i = 1; i < arrayOfLayers.Length; i++)
-            {
-                int indexOfCurrentLayer = 0;
-                for(int j = 0;j < arrayOfLayers[i - 1].Length; j++)
-                {
-                    if (arrayOfLayers[i - 1][j] == null)
-                    {
-                        arrayOfLayers[i][indexOfCurrentLayer++] = null;
-                        //indexOfCurrentLayer++;
-                        arrayOfLayers[i][indexOfCurrentLayer++] = null;
-                        //indexOfCurrentLayer++;
-                    }
-                    else
-                    {
-                        if (arrayOfLayers[i - 1][j].LeftChild != null)
-                            arrayOfLayers[i][indexOfCurrentLayer++] = arrayOfLayers[i-1][j].LeftChild;
-                        else arrayOfLayers[i][indexOfCurrentLayer++] = null;
-                        if (arrayOfLayers[i - 1][j].RightChild != null)
-                            arrayOfLayers[i][indexOfCurrentLayer++] = arrayOfLayers[i-1][j].RightChild;
-                        else arrayOfLayers[i][indexOfCurrentLayer++] = null;
-                    }
-                }
-            }
-            return arrayOfLayers;
-        }
-
-        private string createTextOfRule(DecisionTreeNode node)
-        {
-            string str = string.Empty;
-            if (node.Rule != null)
-            {
-                if (node.Rule.IsQualitative)
-                {
-                    str += String.Format("x[{0}]є ", node.Rule.IndexOfArgument);
-                    for (int i = 0; i < node.Rule.Rules.Count; i++)
-                        str += node.Rule.Rules[i] + ";";
-                }
-                else
-                    str = String.Format("x[{0}]: {1}", node.Rule.IndexOfArgument, Math.Round(node.Rule.Rules[0], 3).ToString());
-            }
-            return str;
+            TreeForm treeForm = new TreeForm(Tree);
+            treeForm.Show();
         }
 
         private void btnDecide_Click(object sender, EventArgs e)
