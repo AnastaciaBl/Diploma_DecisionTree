@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DecisionTree
 {
-    class PostPruningAlgorithm
+    public class PostPruningAlgorithm
     {
         private int amountOfElementsInDataSet;
         private List<RegressionTree> trees;

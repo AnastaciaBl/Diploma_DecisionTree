@@ -8,12 +8,13 @@ namespace DecisionTree
     {
         static void Main(string[] args)
         {
-            List<string> testSample = new List<string>();
-            using (StreamReader sr = new StreamReader("test2.txt"))
+            List<string> testSampleLines = new List<string>();
+            using (StreamReader sr = new StreamReader("test.txt"))
             {
                 while (!sr.EndOfStream)
-                    testSample.Add(sr.ReadLine());
+                    testSampleLines.Add(sr.ReadLine());
             }
+            Data[] testSample = Data.CreateDataSample(testSampleLines);
             RegressionTree dt = new RegressionTree(testSample, 0.1);
             Console.WriteLine(dt.Deside(30.38));
             Console.ReadLine();    

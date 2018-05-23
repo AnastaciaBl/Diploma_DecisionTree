@@ -1,12 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DecisionTree;
 
@@ -34,7 +30,8 @@ namespace DiplomaRegressionTree
                     while (!sr.EndOfStream)
                         linesFromFile.Add(sr.ReadLine());
                 }
-                Tree = new RegressionTree(linesFromFile, Penalty);
+                Data[] dataSet = Data.CreateDataSample(linesFromFile);
+                Tree = new RegressionTree(dataSet, Penalty);
             }
             fillRegressionChart();
         }

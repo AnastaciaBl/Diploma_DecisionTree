@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DecisionTree
 {
-    class Data
+    public class Data
     {
         public double[] Arguments { get; private set; } // x1, ..., xN
         public double Y { get; private set; } // value of function
@@ -14,6 +14,16 @@ namespace DecisionTree
         public int AmountOfArguments { get; private set; }
 
         //test
+        public static Data[] CreateDataSample(List<string> args)
+        {
+            Data[] trainingSample = new Data[args.Count - 1];
+            for (int i = 1; i < args.Count; i++) //args[0] = "y x1 x2 ... xN"
+            {
+                trainingSample[i - 1] = new Data(args[i]);
+            }
+            return trainingSample;
+        }
+
         public Data(double[] args, double y, bool[] Is, int amount)
         {
             Arguments = args;

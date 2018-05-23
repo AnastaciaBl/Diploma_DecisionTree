@@ -2,7 +2,7 @@
 
 namespace DecisionTree
 {
-    class RegressionTree
+    public class RegressionTree
     {
         public DecisionTreeNode Head { get; set; }
         public string Name { get; set; }
@@ -11,9 +11,9 @@ namespace DecisionTree
 
         private RegressionTree() { }
 
-        public RegressionTree(List<string> trainingSampleLines, double penalty)
+        public RegressionTree(Data[] trainingSample, double penalty)
         {
-            Data[] sample = CreateDataSample(trainingSampleLines);
+            Data[] sample = trainingSample;
             Test test = new Test(sample);
             Head = new DecisionTreeNode(test.TrainingSample);
             Head.IsHead = true;
@@ -22,7 +22,7 @@ namespace DecisionTree
             CutUselessNodes(test.TestSample);
         }
 
-        public RegressionTree(List<string> trainingSampleLines, string name, double penalty) :this(trainingSampleLines, penalty)
+        public RegressionTree(Data[] trainingSample, string name, double penalty) :this(trainingSample, penalty)
         {
             Name = name;
         }
@@ -124,16 +124,6 @@ namespace DecisionTree
             //cut leaves which doesn`t have a lot of influence on result
             PostPruningAlgorithm algorithm = new PostPruningAlgorithm(this, Penalty, testSample);
             Head = algorithm.TheBestTree.Head;
-        }
-
-        private Data[] CreateDataSample(List<string> args)
-        {
-            Data[] trainingSample = new Data[args.Count-1];
-            for (int i = 1; i < args.Count; i++) //args[0] = "y x1 x2 ... xN"
-            {
-                trainingSample[i-1] = new Data(args[i]);
-            }
-            return trainingSample;
         }
 
         private DecisionTreeNode DeepCopy(RegressionTree copyTree)

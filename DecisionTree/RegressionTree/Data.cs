@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DecisionTree
 {
@@ -10,6 +14,16 @@ namespace DecisionTree
         public int AmountOfArguments { get; private set; }
 
         //test
+        public static Data[] CreateDataSample(List<string> args)
+        {
+            Data[] trainingSample = new Data[args.Count - 1];
+            for (int i = 1; i < args.Count; i++) //args[0] = "y x1 x2 ... xN"
+            {
+                trainingSample[i - 1] = new Data(args[i]);
+            }
+            return trainingSample;
+        }
+
         public Data(double[] args, double y, bool[] Is, int amount)
         {
             Arguments = args;
