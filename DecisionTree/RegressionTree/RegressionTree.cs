@@ -11,18 +11,16 @@ namespace DecisionTree
 
         private RegressionTree() { }
 
-        public RegressionTree(Data[] trainingSample, double penalty)
+        public RegressionTree(Test trainingSample, double penalty)
         {
-            Data[] sample = trainingSample;
-            Test test = new Test(sample);
-            Head = new DecisionTreeNode(test.TrainingSample);
+            Head = new DecisionTreeNode(trainingSample.TrainingSample);
             Head.IsHead = true;
             Penalty = penalty;
             Learn();
-            CutUselessNodes(test.TestSample);
+            CutUselessNodes(trainingSample.TestSample);
         }
 
-        public RegressionTree(Data[] trainingSample, string name, double penalty) :this(trainingSample, penalty)
+        public RegressionTree(Test trainingSample, string name, double penalty) :this(trainingSample, penalty)
         {
             Name = name;
         }
@@ -47,6 +45,7 @@ namespace DecisionTree
                 if (GeneralMethods.CountError(tempNode.Elements) != 0)
                 {
                     tempNode.Rule = new Rule(tempNode.Elements);
+                    if(tempNode.Rule.Rules.Count == 0)
                     AddChildren(tempNode);
                     qe.Enqueue(tempNode.LeftChild);
                     qe.Enqueue(tempNode.RightChild);

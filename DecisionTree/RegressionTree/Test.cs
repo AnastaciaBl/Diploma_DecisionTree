@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DecisionTree
 {
@@ -8,18 +12,30 @@ namespace DecisionTree
         public Data[] TestSample { get; private set; }
         public const int AmountOfParts = 5;
         public int WhichPartWillBeTheNext { get; private set; }
-
         private const double PercentageOfSampleForTest = 0.2;
         private Data[] allElements { get; set; }
 
-        public Test(Data[] _allElements)
+        private Test()
+        {
+            WhichPartWillBeTheNext = 0;
+        }
+
+        public Test(Data[] _allElements) : this()
         {
             allElements = _allElements;
-            WhichPartWillBeTheNext = 0;
             int amountOfElementInTestSample = (int)Math.Round(allElements.Length * PercentageOfSampleForTest);
             TestSample = new Data[amountOfElementInTestSample];
             TrainingSample = new Data[allElements.Length - amountOfElementInTestSample];
             SplitDataOnTestAndTrainParts();
+        }
+
+        public Test(Data[] trainingSample, Data[] testSample) : this()
+        {
+            TrainingSample = trainingSample;
+            TestSample = testSample;
+            var tempSample = new List<Data>(testSample);
+            tempSample.AddRange(trainingSample);
+            allElements = tempSample.ToArray();
         }
 
         public void SplitDataOnTestAndTrainParts()

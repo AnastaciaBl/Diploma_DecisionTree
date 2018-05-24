@@ -31,7 +31,8 @@ namespace DiplomaRegressionTree
                         linesFromFile.Add(sr.ReadLine());
                 }
                 Data[] dataSet = Data.CreateDataSample(linesFromFile);
-                Tree = new RegressionTree(dataSet, Penalty);
+                Test testDataSet = new Test(dataSet);
+                Tree = new RegressionTree(testDataSet, Penalty);
             }
             fillRegressionChart();
         }
