@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RandomForestLibrary">
+      <HintPath>..\RandomForestLibrary\bin\Debug\RandomForestLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="RegressionTree">
       <HintPath>..\RegressionTree\bin\Debug\RegressionTree.dll</HintPath>
     </Reference>
@@ -58,6 +61,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegressionTreeVisualizator.cs" />
     <Compile Include="TreeForm.cs">
       <SubType>Form</SubType>
     </Compile>

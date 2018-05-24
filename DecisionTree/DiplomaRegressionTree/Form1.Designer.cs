@@ -31,13 +31,17 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnOpenFile = new System.Windows.Forms.Button();
             this.RegressionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.btnDecide = new System.Windows.Forms.Button();
             this.btnDraw = new System.Windows.Forms.Button();
+            this.RandomForestChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.RegressionChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RandomForestChart)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOpenFile
@@ -106,11 +110,26 @@
             this.btnDraw.UseVisualStyleBackColor = true;
             this.btnDraw.Click += new System.EventHandler(this.btnDraw_Click);
             // 
+            // RandomForestChart
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.RandomForestChart.ChartAreas.Add(chartArea2);
+            this.RandomForestChart.Location = new System.Drawing.Point(409, 12);
+            this.RandomForestChart.Name = "RandomForestChart";
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series3.Name = "CorrelationField";
+            this.RandomForestChart.Series.Add(series3);
+            this.RandomForestChart.Size = new System.Drawing.Size(370, 300);
+            this.RandomForestChart.TabIndex = 7;
+            this.RandomForestChart.Text = "chart1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(436, 588);
+            this.ClientSize = new System.Drawing.Size(830, 588);
+            this.Controls.Add(this.RandomForestChart);
             this.Controls.Add(this.btnDraw);
             this.Controls.Add(this.btnDecide);
             this.Controls.Add(this.textBox2);
@@ -120,6 +139,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.RegressionChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RandomForestChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -133,6 +153,7 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button btnDecide;
         private System.Windows.Forms.Button btnDraw;
+        private System.Windows.Forms.DataVisualization.Charting.Chart RandomForestChart;
     }
 }
 

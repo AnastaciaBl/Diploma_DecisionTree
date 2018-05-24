@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using DecisionTree;
 
-namespace RandomForest
+namespace RandomForestLibrary
 {
-    class RandomForest
+    public class RandomForest
     {
         private List<RegressionTree> trees { get; set; }
         private Test trainingSample { get; set; }
