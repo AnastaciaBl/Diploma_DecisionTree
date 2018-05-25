@@ -10,20 +10,23 @@ namespace DiplomaRegressionTree
 {
     public partial class Form1 : Form
     {
-        public RegressionTree Tree { get; set; }
-        public RandomForest Forest { get; set; }
-        public const double Penalty = 0.1;
+        private RegressionTree Tree { get; set; }
+        private RandomForest Forest { get; set; }
+        private Data[] dataSet { get; set; }
+        private double Penalty { get; set; }
+        private int AmountOfTreesInForest { get; set; }
 
         public Form1()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            Penalty = Convert.ToDouble(tbPenalty.Text);
+            AmountOfTreesInForest = Convert.ToInt32(tbAmountOfTrees.Text);
         }
 
         private void btnOpenFile_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "|*.txt";
-            Data[] dataSet = null;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var linesFromFile = new List<string>();
@@ -34,21 +37,68 @@ namespace DiplomaRegressionTree
                 }
                 dataSet = Data.CreateDataSample(linesFromFile);
                 Test testDataSet = new Test(dataSet);
-                Tree = new RegressionTree(testDataSet, "Single Tree",  Penalty);
-                Forest = new RandomForest(dataSet, 100, Penalty);
+                Tree = new RegressionTree(testDataSet, "Single Tree", Penalty);
+                addTreePermissions();
             }
-            fillRegressionChart(dataSet);
-            fillRandomForestChart(dataSet);
+            fillRegressionChart();
+            fillRandomForestChart();
         }
 
-        private void fillRegressionChart(Data[] dataSet)
+        private void btnDraw_Click(object sender, EventArgs e)
+        {
+            TreeForm treeForm = new TreeForm(Tree);
+            treeForm.Show();
+        }
+
+        private void btnDecide_Click(object sender, EventArgs e)
+        {
+            double x = Convert.ToDouble(tbParameters.Text);
+            if (Tree != null)
+            {
+                tbAnswerTree.Text = Tree.Deside(x).ToString();
+            }
+            if(Forest != null)
+            {
+                tbAnswerForest.Text = Forest.Decide(x).ToString();
+            }
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            int amountOfT;
+            if (Int32.TryParse(tbAmountOfTrees.Text, out amountOfT))
+            {
+                AmountOfTreesInForest = Math.Abs(amountOfT);
+                Forest = new RandomForest(dataSet, AmountOfTreesInForest, Penalty);
+                addForestPermission();
+            }
+            else MessageBox.Show("Error", "Input integer value in /Amount of trees/ field");
+        }
+
+        #region Tree
+        private void addTreePermissions()
+        {
+            btnCreate.Enabled = true;
+            btnUpdate.Enabled = true;
+            btnDecideTree.Enabled = true;
+            btnDraw.Enabled = true;
+        }
+
+        private void fillRegressionChart()
         {
             RegressionTreeVisualizator.DrawCorrelationField(dataSet, RegressionChart);
             var treeVisualizator = new RegressionTreeVisualizator(Tree, RegressionChart);
             treeVisualizator.DrawRegressionLine("RegressionLine");
         }
+        #endregion
 
-        private void fillRandomForestChart(Data[] dataSet)
+        #region Forest
+        private void addForestPermission()
+        {
+            btnDecideForest.Enabled = true;
+        }
+
+        private void fillRandomForestChart()
         {
             RegressionTreeVisualizator.DrawCorrelationField(dataSet, RandomForestChart);
             for (int i = 0; i < Forest.AmountOfTrees; i++)
@@ -61,20 +111,6 @@ namespace DiplomaRegressionTree
                 treeVisualizator.DrawRegressionLine(Forest.Trees[i].Name);
             }
         }
-
-        private void btnDraw_Click(object sender, EventArgs e)
-        {
-            TreeForm treeForm = new TreeForm(Tree);
-            treeForm.Show();
-        }
-
-        private void btnDecide_Click(object sender, EventArgs e)
-        {
-            if(Tree != null)
-            {
-                double x = Convert.ToDouble(tbParameters.Text);
-                tbAnswerTree.Text = Tree.Deside(x).ToString();
-            }
-        }
+        #endregion
     }
 }
