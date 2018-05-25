@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DecisionTree;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -19,12 +16,11 @@ namespace DiplomaRegressionTree
             RegressionChart = chart;
         }
 
-        public void DrawCorrelationField()
+        public static void DrawCorrelationField(Data[] dataSet, Chart chart)
         {
-            RegressionChart.Series["CorrelationField"].Points.Clear();
-            for (int i = 0; i < Tree.Head.Elements.Length; i++)
-                RegressionChart.Series["CorrelationField"].Points.AddXY(Tree.Head.Elements[i].Arguments[0],
-                    Tree.Head.Elements[i].Y);
+            chart.Series["CorrelationField"].Points.Clear();
+            for (int i = 0; i < dataSet.Length; i++)
+                chart.Series["CorrelationField"].Points.AddXY(dataSet[i].Arguments[0], dataSet[i].Y);
         }
 
         public void DrawRegressionLine(string series)

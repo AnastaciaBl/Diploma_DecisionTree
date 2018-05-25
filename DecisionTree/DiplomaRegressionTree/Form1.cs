@@ -23,6 +23,7 @@ namespace DiplomaRegressionTree
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "|*.txt";
+            Data[] dataSet = null;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var linesFromFile = new List<string>();
@@ -31,27 +32,26 @@ namespace DiplomaRegressionTree
                     while (!sr.EndOfStream)
                         linesFromFile.Add(sr.ReadLine());
                 }
-                Data[] dataSet = Data.CreateDataSample(linesFromFile);
+                dataSet = Data.CreateDataSample(linesFromFile);
                 Test testDataSet = new Test(dataSet);
-                Tree = new RegressionTree(testDataSet, Penalty);
+                Tree = new RegressionTree(testDataSet, "Single Tree",  Penalty);
                 Forest = new RandomForest(dataSet, 100, Penalty);
             }
-            fillRegressionChart();
-            fillRandomForestChart();
+            fillRegressionChart(dataSet);
+            fillRandomForestChart(dataSet);
         }
 
-        private void fillRegressionChart()
+        private void fillRegressionChart(Data[] dataSet)
         {
+            RegressionTreeVisualizator.DrawCorrelationField(dataSet, RegressionChart);
             var treeVisualizator = new RegressionTreeVisualizator(Tree, RegressionChart);
-            treeVisualizator.DrawCorrelationField();
             treeVisualizator.DrawRegressionLine("RegressionLine");
-            var forestVisualizator = new RegressionTreeVisualizator(Tree, RandomForestChart);
-            forestVisualizator.DrawCorrelationField();
         }
 
-        private void fillRandomForestChart()
+        private void fillRandomForestChart(Data[] dataSet)
         {
-            for(int i = 0; i < Forest.AmountOfTrees; i++)
+            RegressionTreeVisualizator.DrawCorrelationField(dataSet, RandomForestChart);
+            for (int i = 0; i < Forest.AmountOfTrees; i++)
             {
                 var treeVisualizator = new RegressionTreeVisualizator(Forest.Trees[i], RandomForestChart);
                 RandomForestChart.Series.Add(Forest.Trees[i].Name);
@@ -72,8 +72,8 @@ namespace DiplomaRegressionTree
         {
             if(Tree != null)
             {
-                double x = Convert.ToDouble(textBox1.Text);
-                textBox2.Text = Tree.Deside(x).ToString();
+                double x = Convert.ToDouble(tbParameters.Text);
+                tbAnswerTree.Text = Tree.Deside(x).ToString();
             }
         }
     }

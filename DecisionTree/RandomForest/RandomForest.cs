@@ -25,7 +25,7 @@ namespace RandomForest
             Random random = new Random();
             for (int i=0;i<AmountOfTrees;i++)
             {
-                string name = $"Tree #{i + 1}";
+                string name = $"Forest: Tree #{i + 1}";
                 bool flag = false;
                 //on some data sets RegressionTree.dll doesn`t create a rule and then make an exception
                 while (!flag)

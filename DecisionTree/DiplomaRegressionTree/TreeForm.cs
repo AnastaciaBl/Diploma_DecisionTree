@@ -63,6 +63,7 @@ namespace DiplomaRegressionTree
         public TreeForm(RegressionTree tree):this()
         {
             Tree = tree;
+            this.Text = Tree.Name;
             buildTree();
             pictureBoxPaintTree.Paint += drawTree;
         }
