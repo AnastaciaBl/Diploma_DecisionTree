@@ -19,12 +19,6 @@ namespace DiplomaRegressionTree
             RegressionChart = chart;
         }
 
-        //public void fillRegressionChart()
-        //{
-        //    drawCorrelationField();
-        //    drawRegressionLine();
-        //}
-
         public void DrawCorrelationField()
         {
             RegressionChart.Series["CorrelationField"].Points.Clear();

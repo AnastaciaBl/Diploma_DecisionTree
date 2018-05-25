@@ -6,14 +6,14 @@ namespace RandomForest
 {
     public class RandomForest
     {
-        private List<RegressionTree> trees { get; set; }
+        public List<RegressionTree> Trees { get; private set; }
         private Test trainingSample { get; set; }
         public int AmountOfTrees { get; private set; }
         public double Penalty { get; private set; }
 
         public RandomForest(Data[] dataSample, int amountOfTrees, double penalty)
         {
-            trees = new List<RegressionTree>();
+            Trees = new List<RegressionTree>();
             AmountOfTrees = amountOfTrees;
             Penalty = penalty;
             trainingSample = new Test(dataSample);
@@ -32,7 +32,7 @@ namespace RandomForest
                     try
                     {
                         Test testSample = createRandomDataSample(random);
-                        trees.Add(createTree(name, testSample));
+                        Trees.Add(createTree(name, testSample));
                         flag = true;
                     }
                     catch { }
@@ -62,7 +62,7 @@ namespace RandomForest
             double answer = 0;
             for(int i=0;i<AmountOfTrees;i++)
             {
-                answer += trees[i].Deside(X);
+                answer += Trees[i].Deside(X);
             }
             answer = answer / AmountOfTrees;
             return answer;

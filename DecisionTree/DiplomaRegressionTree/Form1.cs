@@ -1,11 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Windows.Forms;
 using DecisionTree;
 using RandomForestLibrary;
+using System.Drawing;
 
 namespace DiplomaRegressionTree
 {
@@ -35,22 +34,32 @@ namespace DiplomaRegressionTree
                 Data[] dataSet = Data.CreateDataSample(linesFromFile);
                 Test testDataSet = new Test(dataSet);
                 Tree = new RegressionTree(testDataSet, Penalty);
+                Forest = new RandomForest(dataSet, 100, Penalty);
             }
             fillRegressionChart();
+            fillRandomForestChart();
         }
 
         private void fillRegressionChart()
         {
-            //drawCorrelationField();
-            //drawRegressionLine();
-            RegressionTreeVisualizator treeVisualizator = new RegressionTreeVisualizator(Tree, RegressionChart);
+            var treeVisualizator = new RegressionTreeVisualizator(Tree, RegressionChart);
             treeVisualizator.DrawCorrelationField();
             treeVisualizator.DrawRegressionLine("RegressionLine");
+            var forestVisualizator = new RegressionTreeVisualizator(Tree, RandomForestChart);
+            forestVisualizator.DrawCorrelationField();
         }
 
         private void fillRandomForestChart()
         {
-            
+            for(int i = 0; i < Forest.AmountOfTrees; i++)
+            {
+                var treeVisualizator = new RegressionTreeVisualizator(Forest.Trees[i], RandomForestChart);
+                RandomForestChart.Series.Add(Forest.Trees[i].Name);
+                RandomForestChart.Series[Forest.Trees[i].Name].Color = Color.Red;
+                RandomForestChart.Series[Forest.Trees[i].Name].BorderWidth = 1;
+                RandomForestChart.Series[Forest.Trees[i].Name].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+                treeVisualizator.DrawRegressionLine(Forest.Trees[i].Name);
+            }
         }
 
         private void btnDraw_Click(object sender, EventArgs e)
