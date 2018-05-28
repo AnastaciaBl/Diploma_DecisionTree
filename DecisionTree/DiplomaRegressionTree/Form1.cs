@@ -13,6 +13,7 @@ namespace DiplomaRegressionTree
         private RegressionTree Tree { get; set; }
         private RandomForest Forest { get; set; }
         private Data[] dataSet { get; set; }
+        private Test TestDataSet { get; set; }
         private double Penalty { get; set; }
         private int AmountOfTreesInForest { get; set; }
 
@@ -29,6 +30,7 @@ namespace DiplomaRegressionTree
             openFileDialog.Filter = "|*.txt";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                closePermissions();
                 var linesFromFile = new List<string>();
                 using (StreamReader sr = new StreamReader(openFileDialog.FileName))
                 {
@@ -36,30 +38,33 @@ namespace DiplomaRegressionTree
                         linesFromFile.Add(sr.ReadLine());
                 }
                 dataSet = Data.CreateDataSample(linesFromFile);
-                Test testDataSet = new Test(dataSet);
-                Tree = new RegressionTree(testDataSet, "Single Tree", Penalty);
+                TestDataSet = new Test(dataSet);
+                Tree = new RegressionTree(TestDataSet, "Single Tree", Penalty);
                 addTreePermissions();
+                fillRegressionChart();
+                cbTrees.Items.Add("Single Tree");
             }
-            fillRegressionChart();
-            fillRandomForestChart();
         }
 
         private void btnDraw_Click(object sender, EventArgs e)
         {
-            TreeForm treeForm = new TreeForm(Tree);
-            treeForm.Show();
-        }
-
-        private void btnDecide_Click(object sender, EventArgs e)
-        {
-            double x = Convert.ToDouble(tbParameters.Text);
-            if (Tree != null)
+            if (cbTrees.Text == string.Empty)
+                MessageBox.Show("Error", "Choose tree for visualization, please!");
+            else
             {
-                tbAnswerTree.Text = Tree.Deside(x).ToString();
-            }
-            if(Forest != null)
-            {
-                tbAnswerForest.Text = Forest.Decide(x).ToString();
+                TreeForm treeForm = null;
+                if (cbTrees.Text == "Single Tree")
+                    treeForm = new TreeForm(Tree);
+                else
+                {
+                    for(int i=0;i<AmountOfTreesInForest;i++)
+                        if(cbTrees.Text == Forest.Trees[i].Name)
+                        {
+                            treeForm = new TreeForm(Forest.Trees[i]);
+                            break;
+                        }
+                }
+                treeForm.Show();
             }
         }
 
@@ -71,8 +76,26 @@ namespace DiplomaRegressionTree
                 AmountOfTreesInForest = Math.Abs(amountOfT);
                 Forest = new RandomForest(dataSet, AmountOfTreesInForest, Penalty);
                 addForestPermission();
+                fillRandomForestChart();
+                addItemsInDrawComboBox();
             }
-            else MessageBox.Show("Error", "Input integer value in /Amount of trees/ field");
+            else MessageBox.Show("Error", "Input integer value in /Amount of trees/ field!");
+        }
+
+        private void addItemsInDrawComboBox()
+        {
+            for (int i = cbTrees.Items.Count - 1; i >= 1; i--)
+                cbTrees.Items.RemoveAt(i);
+            for (int i = 0; i < Forest.Trees.Count; i++)
+                cbTrees.Items.Add(Forest.Trees[i].Name);
+        }
+
+        private void closePermissions()
+        {
+            btnCreate.Enabled = false;
+            btnUpdate.Enabled = false;
+            btnDecideTree.Enabled = false;
+            btnDraw.Enabled = false;
         }
 
         #region Tree
@@ -86,6 +109,7 @@ namespace DiplomaRegressionTree
 
         private void fillRegressionChart()
         {
+            RegressionTreeVisualizator.ClearChart(RegressionChart);
             RegressionTreeVisualizator.DrawCorrelationField(dataSet, RegressionChart);
             var treeVisualizator = new RegressionTreeVisualizator(Tree, RegressionChart);
             treeVisualizator.DrawRegressionLine("RegressionLine");
@@ -100,6 +124,7 @@ namespace DiplomaRegressionTree
 
         private void fillRandomForestChart()
         {
+            RegressionTreeVisualizator.ClearChart(RandomForestChart);
             RegressionTreeVisualizator.DrawCorrelationField(dataSet, RandomForestChart);
             for (int i = 0; i < Forest.AmountOfTrees; i++)
             {
@@ -112,5 +137,60 @@ namespace DiplomaRegressionTree
             }
         }
         #endregion
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            double penalty;
+            if (Double.TryParse(tbPenalty.Text, out penalty))
+            {
+                Penalty = penalty;
+                if (Tree != null)
+                {
+                    Tree = new RegressionTree(TestDataSet, "Single Tree", Penalty);
+                    RegressionTreeVisualizator.ClearChart(RegressionChart);
+                    fillRegressionChart();
+                }
+                if (Forest != null)
+                {
+                    Forest = new RandomForest(dataSet, AmountOfTreesInForest, Penalty);
+                    RegressionTreeVisualizator.ClearChart(RandomForestChart);
+                    fillRandomForestChart();
+                }
+            }
+            else MessageBox.Show("Error", "Input double value in /Penalty on leaves amount/ field!");
+        }
+
+        private void btnDecide_Click(object sender, EventArgs e)
+        {
+            double[] x = null;
+            try
+            { x = parseParametersLine(); }
+            catch
+            { MessageBox.Show("Error", "Input double values separated by one space in /Parameters/ field!"); }
+            if (Tree != null)
+                tbAnswerTree.Text = Tree.Deside(x).ToString();
+            }
+
+        private void btnDecideForest_Click(object sender, EventArgs e)
+        {
+            double[] x = null;
+            try
+            { x = parseParametersLine(); }
+            catch
+            { MessageBox.Show("Error", "Input double values separated by one space in /Parameters/ field!"); }
+            if (Forest != null)
+                tbAnswerForest.Text = Forest.Decide(x).ToString();
+        }
+
+        private double[] parseParametersLine()
+        {
+            string[] parameters = tbParameters.Text.Split(' ');
+            var resParametrs = new double[parameters.Length];
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                resParametrs[i] = Convert.ToDouble(parameters[i]);
+            }
+            return resParametrs;
+        }
     }
 }

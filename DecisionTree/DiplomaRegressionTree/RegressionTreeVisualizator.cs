@@ -105,5 +105,20 @@ namespace DiplomaRegressionTree
             }
             return answer;
         }
+
+        public static void ClearChart(Chart chart)
+        {
+            chart.Series["CorrelationField"].Points.Clear();
+            switch (chart.Name)
+            {
+                case "RegressionChart":
+                    chart.Series["RegressionLine"].Points.Clear();
+                    break;
+                case "RandomForestChart":
+                    for (int i = chart.Series.Count - 1; i >= 1; i--)
+                        chart.Series.RemoveAt(i);
+                    break;
+            }
+        }
     }
 }
