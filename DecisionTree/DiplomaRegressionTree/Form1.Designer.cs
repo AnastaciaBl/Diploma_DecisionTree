@@ -63,6 +63,16 @@
             this.cbTrees = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.Tables = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnDoTest = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnChooseTest = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbTestName = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tbTestAmountOfParameters = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tbTestPenalty = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.RegressionChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RandomForestChart)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -72,6 +82,9 @@
             this.groupBox2.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.Tables.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOpenFile
@@ -378,6 +391,8 @@
             // 
             // Tables
             // 
+            this.Tables.Controls.Add(this.groupBox6);
+            this.Tables.Controls.Add(this.dataGridView1);
             this.Tables.Location = new System.Drawing.Point(4, 22);
             this.Tables.Name = "Tables";
             this.Tables.Padding = new System.Windows.Forms.Padding(3);
@@ -385,6 +400,97 @@
             this.Tables.TabIndex = 1;
             this.Tables.Text = "Tables";
             this.Tables.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(6, 149);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(916, 484);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // btnDoTest
+            // 
+            this.btnDoTest.Location = new System.Drawing.Point(671, 41);
+            this.btnDoTest.Name = "btnDoTest";
+            this.btnDoTest.Size = new System.Drawing.Size(230, 57);
+            this.btnDoTest.TabIndex = 2;
+            this.btnDoTest.Text = "Start test!";
+            this.btnDoTest.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.tbTestPenalty);
+            this.groupBox6.Controls.Add(this.label9);
+            this.groupBox6.Controls.Add(this.tbTestAmountOfParameters);
+            this.groupBox6.Controls.Add(this.label8);
+            this.groupBox6.Controls.Add(this.tbTestName);
+            this.groupBox6.Controls.Add(this.label7);
+            this.groupBox6.Controls.Add(this.btnChooseTest);
+            this.groupBox6.Controls.Add(this.btnDoTest);
+            this.groupBox6.Location = new System.Drawing.Point(6, 6);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(916, 137);
+            this.groupBox6.TabIndex = 2;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Test info:";
+            // 
+            // btnChooseTest
+            // 
+            this.btnChooseTest.Location = new System.Drawing.Point(415, 41);
+            this.btnChooseTest.Name = "btnChooseTest";
+            this.btnChooseTest.Size = new System.Drawing.Size(230, 57);
+            this.btnChooseTest.TabIndex = 1;
+            this.btnChooseTest.Text = "Choose test folder";
+            this.btnChooseTest.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 63);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(113, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "Amount of parameters:";
+            // 
+            // tbTestName
+            // 
+            this.tbTestName.Location = new System.Drawing.Point(165, 28);
+            this.tbTestName.Name = "tbTestName";
+            this.tbTestName.Size = new System.Drawing.Size(224, 20);
+            this.tbTestName.TabIndex = 4;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(9, 31);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(68, 13);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "Test`s name:";
+            // 
+            // tbTestAmountOfParameters
+            // 
+            this.tbTestAmountOfParameters.Location = new System.Drawing.Point(165, 60);
+            this.tbTestAmountOfParameters.Name = "tbTestAmountOfParameters";
+            this.tbTestAmountOfParameters.Size = new System.Drawing.Size(224, 20);
+            this.tbTestAmountOfParameters.TabIndex = 6;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(9, 94);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(140, 13);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Penalty of leaves`s amount: ";
+            // 
+            // tbTestPenalty
+            // 
+            this.tbTestPenalty.Location = new System.Drawing.Point(165, 91);
+            this.tbTestPenalty.Name = "tbTestPenalty";
+            this.tbTestPenalty.Size = new System.Drawing.Size(224, 20);
+            this.tbTestPenalty.TabIndex = 8;
             // 
             // Form1
             // 
@@ -407,6 +513,10 @@
             this.groupBox5.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.Tables.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -441,6 +551,16 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbTrees;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.TextBox tbTestPenalty;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox tbTestAmountOfParameters;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox tbTestName;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnChooseTest;
+        private System.Windows.Forms.Button btnDoTest;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 
