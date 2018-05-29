@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DecisionTree
 {
@@ -45,7 +46,6 @@ namespace DecisionTree
                 if (GeneralMethods.CountError(tempNode.Elements) != 0)
                 {
                     tempNode.Rule = new Rule(tempNode.Elements);
-                    if(tempNode.Rule.Rules.Count == 0)
                     AddChildren(tempNode);
                     qe.Enqueue(tempNode.LeftChild);
                     qe.Enqueue(tempNode.RightChild);
@@ -204,6 +204,18 @@ namespace DecisionTree
                 }
                 currentPosition++;
             }
+        }
+
+        public double TestDataSet(Data[] data)
+        {
+            double error = 0;
+            for(int i=0;i<data.Length;i++)
+            {
+                double tempError = Math.Abs(this.Deside(data[i].Arguments) - data[i].Y);
+                error = tempError * tempError;
+            }
+            error = Math.Sqrt(error);
+            return error;
         }
     }
 }

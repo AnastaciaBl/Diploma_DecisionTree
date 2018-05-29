@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.btnOpenFile = new System.Windows.Forms.Button();
             this.RegressionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tbParameters = new System.Windows.Forms.TextBox();
@@ -63,16 +63,26 @@
             this.cbTrees = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.Tables = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnDoTest = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.btnChooseTest = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tbTestName = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.tbTestAmountOfParameters = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.tbTestPenalty = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tbTestAmountOfParameters = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tbTestName = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btnChooseTest = new System.Windows.Forms.Button();
+            this.btnDoTest = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btnTest = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.tbResultPenalty = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbResultAmountOfTrees = new System.Windows.Forms.TextBox();
+            this.tbResultTreeError = new System.Windows.Forms.TextBox();
+            this.tbResultForestError = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.RegressionChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RandomForestChart)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -83,8 +93,9 @@
             this.groupBox5.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.Tables.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOpenFile
@@ -99,30 +110,30 @@
             // 
             // RegressionChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.RegressionChart.ChartAreas.Add(chartArea1);
-            this.RegressionChart.Location = new System.Drawing.Point(6, 6);
+            chartArea3.Name = "ChartArea1";
+            this.RegressionChart.ChartAreas.Add(chartArea3);
+            this.RegressionChart.Location = new System.Drawing.Point(8, 6);
             this.RegressionChart.Name = "RegressionChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series1.Legend = "Legend1";
-            series1.Name = "CorrelationField";
-            series2.BorderColor = System.Drawing.Color.White;
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series2.Color = System.Drawing.Color.Red;
-            series2.Legend = "Legend1";
-            series2.Name = "RegressionLine";
-            this.RegressionChart.Series.Add(series1);
-            this.RegressionChart.Series.Add(series2);
-            this.RegressionChart.Size = new System.Drawing.Size(450, 365);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series4.Legend = "Legend1";
+            series4.Name = "CorrelationField";
+            series5.BorderColor = System.Drawing.Color.White;
+            series5.BorderWidth = 3;
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series5.Color = System.Drawing.Color.Red;
+            series5.Legend = "Legend1";
+            series5.Name = "RegressionLine";
+            this.RegressionChart.Series.Add(series4);
+            this.RegressionChart.Series.Add(series5);
+            this.RegressionChart.Size = new System.Drawing.Size(531, 365);
             this.RegressionChart.TabIndex = 1;
             this.RegressionChart.Text = "chart1";
-            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            title1.Name = "RegressionTree";
-            title1.Text = "Regression Tree";
-            this.RegressionChart.Titles.Add(title1);
+            title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            title3.Name = "RegressionTree";
+            title3.Text = "Regression Tree";
+            this.RegressionChart.Titles.Add(title3);
             // 
             // tbParameters
             // 
@@ -163,21 +174,21 @@
             // 
             // RandomForestChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.RandomForestChart.ChartAreas.Add(chartArea2);
-            this.RandomForestChart.Location = new System.Drawing.Point(466, 6);
+            chartArea4.Name = "ChartArea1";
+            this.RandomForestChart.ChartAreas.Add(chartArea4);
+            this.RandomForestChart.Location = new System.Drawing.Point(546, 0);
             this.RandomForestChart.Name = "RandomForestChart";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series3.Name = "CorrelationField";
-            this.RandomForestChart.Series.Add(series3);
-            this.RandomForestChart.Size = new System.Drawing.Size(450, 365);
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series6.Name = "CorrelationField";
+            this.RandomForestChart.Series.Add(series6);
+            this.RandomForestChart.Size = new System.Drawing.Size(531, 365);
             this.RandomForestChart.TabIndex = 7;
             this.RandomForestChart.Text = "chart1";
-            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            title2.Name = "RandomForest";
-            title2.Text = "Random Forest";
-            this.RandomForestChart.Titles.Add(title2);
+            title4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            title4.Name = "RandomForest";
+            title4.Text = "Random Forest";
+            this.RandomForestChart.Titles.Add(title4);
             // 
             // tabControl1
             // 
@@ -186,11 +197,12 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(936, 665);
+            this.tabControl1.Size = new System.Drawing.Size(1094, 665);
             this.tabControl1.TabIndex = 8;
             // 
             // Graphics
             // 
+            this.Graphics.Controls.Add(this.groupBox7);
             this.Graphics.Controls.Add(this.groupBox3);
             this.Graphics.Controls.Add(this.groupBox2);
             this.Graphics.Controls.Add(this.groupBox1);
@@ -199,7 +211,7 @@
             this.Graphics.Location = new System.Drawing.Point(4, 22);
             this.Graphics.Name = "Graphics";
             this.Graphics.Padding = new System.Windows.Forms.Padding(3);
-            this.Graphics.Size = new System.Drawing.Size(928, 639);
+            this.Graphics.Size = new System.Drawing.Size(1086, 639);
             this.Graphics.TabIndex = 0;
             this.Graphics.Text = "Graphics";
             this.Graphics.UseVisualStyleBackColor = true;
@@ -211,7 +223,7 @@
             this.groupBox3.Controls.Add(this.groupBox4);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.btnOpenFile);
-            this.groupBox3.Location = new System.Drawing.Point(37, 375);
+            this.groupBox3.Location = new System.Drawing.Point(8, 374);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(250, 257);
             this.groupBox3.TabIndex = 10;
@@ -293,7 +305,7 @@
             this.groupBox2.Controls.Add(this.btnDecideForest);
             this.groupBox2.Controls.Add(this.groupBox5);
             this.groupBox2.Controls.Add(this.btnDecideTree);
-            this.groupBox2.Location = new System.Drawing.Point(315, 374);
+            this.groupBox2.Location = new System.Drawing.Point(264, 374);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(300, 257);
             this.groupBox2.TabIndex = 9;
@@ -365,7 +377,7 @@
             this.groupBox1.Controls.Add(this.cbTrees);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.btnDraw);
-            this.groupBox1.Location = new System.Drawing.Point(646, 374);
+            this.groupBox1.Location = new System.Drawing.Point(570, 374);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(250, 257);
             this.groupBox1.TabIndex = 8;
@@ -401,23 +413,6 @@
             this.Tables.Text = "Tables";
             this.Tables.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 149);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(916, 484);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // btnDoTest
-            // 
-            this.btnDoTest.Location = new System.Drawing.Point(671, 41);
-            this.btnDoTest.Name = "btnDoTest";
-            this.btnDoTest.Size = new System.Drawing.Size(230, 57);
-            this.btnDoTest.TabIndex = 2;
-            this.btnDoTest.Text = "Start test!";
-            this.btnDoTest.UseVisualStyleBackColor = true;
-            // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.tbTestPenalty);
@@ -435,46 +430,12 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Test info:";
             // 
-            // btnChooseTest
+            // tbTestPenalty
             // 
-            this.btnChooseTest.Location = new System.Drawing.Point(415, 41);
-            this.btnChooseTest.Name = "btnChooseTest";
-            this.btnChooseTest.Size = new System.Drawing.Size(230, 57);
-            this.btnChooseTest.TabIndex = 1;
-            this.btnChooseTest.Text = "Choose test folder";
-            this.btnChooseTest.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(9, 63);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(113, 13);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "Amount of parameters:";
-            // 
-            // tbTestName
-            // 
-            this.tbTestName.Location = new System.Drawing.Point(165, 28);
-            this.tbTestName.Name = "tbTestName";
-            this.tbTestName.Size = new System.Drawing.Size(224, 20);
-            this.tbTestName.TabIndex = 4;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(9, 31);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(68, 13);
-            this.label8.TabIndex = 5;
-            this.label8.Text = "Test`s name:";
-            // 
-            // tbTestAmountOfParameters
-            // 
-            this.tbTestAmountOfParameters.Location = new System.Drawing.Point(165, 60);
-            this.tbTestAmountOfParameters.Name = "tbTestAmountOfParameters";
-            this.tbTestAmountOfParameters.Size = new System.Drawing.Size(224, 20);
-            this.tbTestAmountOfParameters.TabIndex = 6;
+            this.tbTestPenalty.Location = new System.Drawing.Point(165, 91);
+            this.tbTestPenalty.Name = "tbTestPenalty";
+            this.tbTestPenalty.Size = new System.Drawing.Size(224, 20);
+            this.tbTestPenalty.TabIndex = 8;
             // 
             // label9
             // 
@@ -485,18 +446,166 @@
             this.label9.TabIndex = 7;
             this.label9.Text = "Penalty of leaves`s amount: ";
             // 
-            // tbTestPenalty
+            // tbTestAmountOfParameters
             // 
-            this.tbTestPenalty.Location = new System.Drawing.Point(165, 91);
-            this.tbTestPenalty.Name = "tbTestPenalty";
-            this.tbTestPenalty.Size = new System.Drawing.Size(224, 20);
-            this.tbTestPenalty.TabIndex = 8;
+            this.tbTestAmountOfParameters.Location = new System.Drawing.Point(165, 60);
+            this.tbTestAmountOfParameters.Name = "tbTestAmountOfParameters";
+            this.tbTestAmountOfParameters.Size = new System.Drawing.Size(224, 20);
+            this.tbTestAmountOfParameters.TabIndex = 6;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(9, 31);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(68, 13);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "Test`s name:";
+            // 
+            // tbTestName
+            // 
+            this.tbTestName.Location = new System.Drawing.Point(165, 28);
+            this.tbTestName.Name = "tbTestName";
+            this.tbTestName.Size = new System.Drawing.Size(224, 20);
+            this.tbTestName.TabIndex = 4;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 63);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(113, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "Amount of parameters:";
+            // 
+            // btnChooseTest
+            // 
+            this.btnChooseTest.Location = new System.Drawing.Point(415, 41);
+            this.btnChooseTest.Name = "btnChooseTest";
+            this.btnChooseTest.Size = new System.Drawing.Size(230, 57);
+            this.btnChooseTest.TabIndex = 1;
+            this.btnChooseTest.Text = "Choose test folder";
+            this.btnChooseTest.UseVisualStyleBackColor = true;
+            // 
+            // btnDoTest
+            // 
+            this.btnDoTest.Location = new System.Drawing.Point(671, 41);
+            this.btnDoTest.Name = "btnDoTest";
+            this.btnDoTest.Size = new System.Drawing.Size(230, 57);
+            this.btnDoTest.TabIndex = 2;
+            this.btnDoTest.Text = "Start test!";
+            this.btnDoTest.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(6, 149);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(916, 484);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.tbResultForestError);
+            this.groupBox7.Controls.Add(this.tbResultTreeError);
+            this.groupBox7.Controls.Add(this.tbResultAmountOfTrees);
+            this.groupBox7.Controls.Add(this.label13);
+            this.groupBox7.Controls.Add(this.tbResultPenalty);
+            this.groupBox7.Controls.Add(this.label12);
+            this.groupBox7.Controls.Add(this.btnTest);
+            this.groupBox7.Controls.Add(this.label11);
+            this.groupBox7.Controls.Add(this.label10);
+            this.groupBox7.Location = new System.Drawing.Point(826, 377);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(250, 257);
+            this.groupBox7.TabIndex = 11;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Result:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 109);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(64, 13);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "Tree`s error:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 135);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(71, 13);
+            this.label11.TabIndex = 7;
+            this.label11.Text = "Forest`s error:";
+            // 
+            // btnTest
+            // 
+            this.btnTest.Enabled = false;
+            this.btnTest.Location = new System.Drawing.Point(60, 185);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(138, 44);
+            this.btnTest.TabIndex = 8;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 36);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(45, 13);
+            this.label12.TabIndex = 9;
+            this.label12.Text = "Penalty:";
+            // 
+            // tbResultPenalty
+            // 
+            this.tbResultPenalty.Location = new System.Drawing.Point(161, 33);
+            this.tbResultPenalty.Name = "tbResultPenalty";
+            this.tbResultPenalty.ReadOnly = true;
+            this.tbResultPenalty.Size = new System.Drawing.Size(61, 20);
+            this.tbResultPenalty.TabIndex = 10;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 66);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(142, 13);
+            this.label13.TabIndex = 11;
+            this.label13.Text = "Amount of trees in the forest:";
+            // 
+            // tbResultAmountOfTrees
+            // 
+            this.tbResultAmountOfTrees.Location = new System.Drawing.Point(161, 60);
+            this.tbResultAmountOfTrees.Name = "tbResultAmountOfTrees";
+            this.tbResultAmountOfTrees.ReadOnly = true;
+            this.tbResultAmountOfTrees.Size = new System.Drawing.Size(61, 20);
+            this.tbResultAmountOfTrees.TabIndex = 12;
+            // 
+            // tbResultTreeError
+            // 
+            this.tbResultTreeError.Location = new System.Drawing.Point(161, 106);
+            this.tbResultTreeError.Name = "tbResultTreeError";
+            this.tbResultTreeError.ReadOnly = true;
+            this.tbResultTreeError.Size = new System.Drawing.Size(61, 20);
+            this.tbResultTreeError.TabIndex = 13;
+            // 
+            // tbResultForestError
+            // 
+            this.tbResultForestError.Location = new System.Drawing.Point(161, 132);
+            this.tbResultForestError.Name = "tbResultForestError";
+            this.tbResultForestError.ReadOnly = true;
+            this.tbResultForestError.Size = new System.Drawing.Size(61, 20);
+            this.tbResultForestError.TabIndex = 14;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 669);
+            this.ClientSize = new System.Drawing.Size(1093, 669);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Regression Tree, Anastasiia Blyzniuk (PZ-14-1)";
@@ -514,9 +623,11 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.Tables.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -561,6 +672,16 @@
         private System.Windows.Forms.Button btnChooseTest;
         private System.Windows.Forms.Button btnDoTest;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.TextBox tbResultForestError;
+        private System.Windows.Forms.TextBox tbResultTreeError;
+        private System.Windows.Forms.TextBox tbResultAmountOfTrees;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox tbResultPenalty;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
     }
 }
 

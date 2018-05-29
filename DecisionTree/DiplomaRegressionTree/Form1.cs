@@ -43,13 +43,14 @@ namespace DiplomaRegressionTree
                 addTreePermissions();
                 fillRegressionChart();
                 cbTrees.Items.Add("Single Tree");
+                MessageBox.Show("Tree was build.");
             }
         }
 
         private void btnDraw_Click(object sender, EventArgs e)
         {
             if (cbTrees.Text == string.Empty)
-                MessageBox.Show("Error", "Choose tree for visualization, please!");
+                MessageBox.Show("Choose tree for visualization, please!", "Error");
             else
             {
                 TreeForm treeForm = null;
@@ -78,8 +79,9 @@ namespace DiplomaRegressionTree
                 addForestPermission();
                 fillRandomForestChart();
                 addItemsInDrawComboBox();
+                MessageBox.Show("Forest was build.");
             }
-            else MessageBox.Show("Error", "Input integer value in /Amount of trees/ field!");
+            else MessageBox.Show("Input integer value in /Amount of trees/ field!", "Error");
         }
 
         private void addItemsInDrawComboBox()
@@ -105,14 +107,18 @@ namespace DiplomaRegressionTree
             btnUpdate.Enabled = true;
             btnDecideTree.Enabled = true;
             btnDraw.Enabled = true;
+            btnTest.Enabled = true;
         }
 
         private void fillRegressionChart()
         {
-            RegressionTreeVisualizator.ClearChart(RegressionChart);
-            RegressionTreeVisualizator.DrawCorrelationField(dataSet, RegressionChart);
-            var treeVisualizator = new RegressionTreeVisualizator(Tree, RegressionChart);
-            treeVisualizator.DrawRegressionLine("RegressionLine");
+            if (dataSet[0].AmountOfArguments == 1)
+            {
+                RegressionTreeVisualizator.ClearChart(RegressionChart);
+                RegressionTreeVisualizator.DrawCorrelationField(dataSet, RegressionChart);
+                var treeVisualizator = new RegressionTreeVisualizator(Tree, RegressionChart);
+                treeVisualizator.DrawRegressionLine("RegressionLine");
+            }
         }
         #endregion
 
@@ -124,16 +130,19 @@ namespace DiplomaRegressionTree
 
         private void fillRandomForestChart()
         {
-            RegressionTreeVisualizator.ClearChart(RandomForestChart);
-            RegressionTreeVisualizator.DrawCorrelationField(dataSet, RandomForestChart);
-            for (int i = 0; i < Forest.AmountOfTrees; i++)
+            if (dataSet[0].AmountOfArguments == 1)
             {
-                var treeVisualizator = new RegressionTreeVisualizator(Forest.Trees[i], RandomForestChart);
-                RandomForestChart.Series.Add(Forest.Trees[i].Name);
-                RandomForestChart.Series[Forest.Trees[i].Name].Color = Color.Red;
-                RandomForestChart.Series[Forest.Trees[i].Name].BorderWidth = 1;
-                RandomForestChart.Series[Forest.Trees[i].Name].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-                treeVisualizator.DrawRegressionLine(Forest.Trees[i].Name);
+                RegressionTreeVisualizator.ClearChart(RandomForestChart);
+                RegressionTreeVisualizator.DrawCorrelationField(dataSet, RandomForestChart);
+                for (int i = 0; i < Forest.AmountOfTrees; i++)
+                {
+                    var treeVisualizator = new RegressionTreeVisualizator(Forest.Trees[i], RandomForestChart);
+                    RandomForestChart.Series.Add(Forest.Trees[i].Name);
+                    RandomForestChart.Series[Forest.Trees[i].Name].Color = Color.Red;
+                    RandomForestChart.Series[Forest.Trees[i].Name].BorderWidth = 1;
+                    RandomForestChart.Series[Forest.Trees[i].Name].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+                    treeVisualizator.DrawRegressionLine(Forest.Trees[i].Name);
+                }
             }
         }
         #endregion
@@ -157,7 +166,7 @@ namespace DiplomaRegressionTree
                     fillRandomForestChart();
                 }
             }
-            else MessageBox.Show("Error", "Input double value in /Penalty on leaves amount/ field!");
+            else MessageBox.Show("Input double value in /Penalty on leaves amount/ field!", "Error");
         }
 
         private void btnDecide_Click(object sender, EventArgs e)
@@ -166,7 +175,7 @@ namespace DiplomaRegressionTree
             try
             { x = parseParametersLine(); }
             catch
-            { MessageBox.Show("Error", "Input double values separated by one space in /Parameters/ field!"); }
+            { MessageBox.Show("Input double values separated by one space in /Parameters/ field!", "Error"); }
             if (Tree != null)
                 tbAnswerTree.Text = Tree.Deside(x).ToString();
             }
@@ -177,7 +186,7 @@ namespace DiplomaRegressionTree
             try
             { x = parseParametersLine(); }
             catch
-            { MessageBox.Show("Error", "Input double values separated by one space in /Parameters/ field!"); }
+            { MessageBox.Show("Input double values separated by one space in /Parameters/ field!", "Error"); }
             if (Forest != null)
                 tbAnswerForest.Text = Forest.Decide(x).ToString();
         }
@@ -191,6 +200,28 @@ namespace DiplomaRegressionTree
                 resParametrs[i] = Convert.ToDouble(parameters[i]);
             }
             return resParametrs;
+        }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "|*.txt";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Data[] dataSet;
+                var linesFromFile = new List<string>();
+                using (StreamReader sr = new StreamReader(openFileDialog.FileName))
+                {
+                    while (!sr.EndOfStream)
+                        linesFromFile.Add(sr.ReadLine());
+                }
+                dataSet = Data.CreateDataSample(linesFromFile);
+                tbResultPenalty.Text = Penalty.ToString();
+                tbResultAmountOfTrees.Text = AmountOfTreesInForest.ToString();
+                tbResultTreeError.Text = Math.Round(Tree.TestDataSet(dataSet), 4).ToString();
+                if (Forest != null)
+                    tbResultForestError.Text = Math.Round(Forest.TestDataSet(dataSet), 4).ToString();
+            }
         }
     }
 }

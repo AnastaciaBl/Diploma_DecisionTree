@@ -67,5 +67,18 @@ namespace RandomForestLibrary
             answer = answer / AmountOfTrees;
             return answer;
         }
+
+        public double TestDataSet(Data[] data)
+        {
+            double error = 0;
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                double tempError = Math.Abs(this.Decide(data[i].Arguments) - data[i].Y);
+                error = tempError * tempError;
+            }
+            error = Math.Sqrt(error);
+            return error;
+        }
     }
 }
