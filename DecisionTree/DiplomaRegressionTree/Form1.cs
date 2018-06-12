@@ -42,9 +42,15 @@ namespace DiplomaRegressionTree
                 Tree = new RegressionTree(TestDataSet, "Single Tree", Penalty);
                 addTreePermissions();
                 fillRegressionChart();
-                cbTrees.Items.Add("Single Tree");
+                AddSingleTreeToComboBox();
                 MessageBox.Show("Tree was build.");
             }
+        }
+
+        private void AddSingleTreeToComboBox()
+        {
+            cbTrees.Items.Clear();
+            cbTrees.Items.Add("Single Tree");
         }
 
         private void btnDraw_Click(object sender, EventArgs e)
@@ -86,8 +92,9 @@ namespace DiplomaRegressionTree
 
         private void addItemsInDrawComboBox()
         {
-            for (int i = cbTrees.Items.Count - 1; i >= 1; i--)
-                cbTrees.Items.RemoveAt(i);
+            AddSingleTreeToComboBox();
+            //for (int i = cbTrees.Items.Count - 1; i >= 1; i--)
+            //    cbTrees.Items.RemoveAt(i);
             for (int i = 0; i < Forest.Trees.Count; i++)
                 cbTrees.Items.Add(Forest.Trees[i].Name);
         }
