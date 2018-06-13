@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.btnOpenFile = new System.Windows.Forms.Button();
             this.RegressionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tbParameters = new System.Windows.Forms.TextBox();
@@ -44,6 +44,16 @@
             this.RandomForestChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Graphics = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.tbResultForestError = new System.Windows.Forms.TextBox();
+            this.tbResultTreeError = new System.Windows.Forms.TextBox();
+            this.tbResultAmountOfTrees = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbResultPenalty = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.btnTest = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.tbPenalty = new System.Windows.Forms.TextBox();
@@ -72,21 +82,18 @@
             this.label7 = new System.Windows.Forms.Label();
             this.btnChooseTest = new System.Windows.Forms.Button();
             this.btnDoTest = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.btnTest = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-            this.tbResultPenalty = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.tbResultAmountOfTrees = new System.Windows.Forms.TextBox();
-            this.tbResultTreeError = new System.Windows.Forms.TextBox();
-            this.tbResultForestError = new System.Windows.Forms.TextBox();
+            this.dataGridTest = new System.Windows.Forms.DataGridView();
+            this.tbS2Tree = new System.Windows.Forms.TextBox();
+            this.tbS2Forest = new System.Windows.Forms.TextBox();
+            this.tbSTree = new System.Windows.Forms.TextBox();
+            this.tbSForest = new System.Windows.Forms.TextBox();
+            this.tbCoefTree = new System.Windows.Forms.TextBox();
+            this.tbCoefForest = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.RegressionChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RandomForestChart)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.Graphics.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -94,8 +101,7 @@
             this.groupBox1.SuspendLayout();
             this.Tables.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridTest)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOpenFile
@@ -110,30 +116,30 @@
             // 
             // RegressionChart
             // 
-            chartArea3.Name = "ChartArea1";
-            this.RegressionChart.ChartAreas.Add(chartArea3);
+            chartArea1.Name = "ChartArea1";
+            this.RegressionChart.ChartAreas.Add(chartArea1);
             this.RegressionChart.Location = new System.Drawing.Point(8, 6);
             this.RegressionChart.Name = "RegressionChart";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series4.Legend = "Legend1";
-            series4.Name = "CorrelationField";
-            series5.BorderColor = System.Drawing.Color.White;
-            series5.BorderWidth = 3;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series5.Color = System.Drawing.Color.Red;
-            series5.Legend = "Legend1";
-            series5.Name = "RegressionLine";
-            this.RegressionChart.Series.Add(series4);
-            this.RegressionChart.Series.Add(series5);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series1.Legend = "Legend1";
+            series1.Name = "CorrelationField";
+            series2.BorderColor = System.Drawing.Color.White;
+            series2.BorderWidth = 3;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series2.Color = System.Drawing.Color.Red;
+            series2.Legend = "Legend1";
+            series2.Name = "RegressionLine";
+            this.RegressionChart.Series.Add(series1);
+            this.RegressionChart.Series.Add(series2);
             this.RegressionChart.Size = new System.Drawing.Size(531, 365);
             this.RegressionChart.TabIndex = 1;
             this.RegressionChart.Text = "chart1";
-            title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            title3.Name = "RegressionTree";
-            title3.Text = "Regression Tree";
-            this.RegressionChart.Titles.Add(title3);
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            title1.Name = "RegressionTree";
+            title1.Text = "Regression Tree";
+            this.RegressionChart.Titles.Add(title1);
             // 
             // tbParameters
             // 
@@ -174,21 +180,21 @@
             // 
             // RandomForestChart
             // 
-            chartArea4.Name = "ChartArea1";
-            this.RandomForestChart.ChartAreas.Add(chartArea4);
+            chartArea2.Name = "ChartArea1";
+            this.RandomForestChart.ChartAreas.Add(chartArea2);
             this.RandomForestChart.Location = new System.Drawing.Point(546, 0);
             this.RandomForestChart.Name = "RandomForestChart";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series6.Name = "CorrelationField";
-            this.RandomForestChart.Series.Add(series6);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series3.Name = "CorrelationField";
+            this.RandomForestChart.Series.Add(series3);
             this.RandomForestChart.Size = new System.Drawing.Size(531, 365);
             this.RandomForestChart.TabIndex = 7;
             this.RandomForestChart.Text = "chart1";
-            title4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            title4.Name = "RandomForest";
-            title4.Text = "Random Forest";
-            this.RandomForestChart.Titles.Add(title4);
+            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            title2.Name = "RandomForest";
+            title2.Text = "Random Forest";
+            this.RandomForestChart.Titles.Add(title2);
             // 
             // tabControl1
             // 
@@ -215,6 +221,103 @@
             this.Graphics.TabIndex = 0;
             this.Graphics.Text = "Graphics";
             this.Graphics.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.tbResultForestError);
+            this.groupBox7.Controls.Add(this.tbResultTreeError);
+            this.groupBox7.Controls.Add(this.tbResultAmountOfTrees);
+            this.groupBox7.Controls.Add(this.label13);
+            this.groupBox7.Controls.Add(this.tbResultPenalty);
+            this.groupBox7.Controls.Add(this.label12);
+            this.groupBox7.Controls.Add(this.btnTest);
+            this.groupBox7.Controls.Add(this.label11);
+            this.groupBox7.Controls.Add(this.label10);
+            this.groupBox7.Location = new System.Drawing.Point(826, 377);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(250, 257);
+            this.groupBox7.TabIndex = 11;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Result:";
+            // 
+            // tbResultForestError
+            // 
+            this.tbResultForestError.Location = new System.Drawing.Point(161, 132);
+            this.tbResultForestError.Name = "tbResultForestError";
+            this.tbResultForestError.ReadOnly = true;
+            this.tbResultForestError.Size = new System.Drawing.Size(61, 20);
+            this.tbResultForestError.TabIndex = 14;
+            // 
+            // tbResultTreeError
+            // 
+            this.tbResultTreeError.Location = new System.Drawing.Point(161, 106);
+            this.tbResultTreeError.Name = "tbResultTreeError";
+            this.tbResultTreeError.ReadOnly = true;
+            this.tbResultTreeError.Size = new System.Drawing.Size(61, 20);
+            this.tbResultTreeError.TabIndex = 13;
+            // 
+            // tbResultAmountOfTrees
+            // 
+            this.tbResultAmountOfTrees.Location = new System.Drawing.Point(161, 60);
+            this.tbResultAmountOfTrees.Name = "tbResultAmountOfTrees";
+            this.tbResultAmountOfTrees.ReadOnly = true;
+            this.tbResultAmountOfTrees.Size = new System.Drawing.Size(61, 20);
+            this.tbResultAmountOfTrees.TabIndex = 12;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 66);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(142, 13);
+            this.label13.TabIndex = 11;
+            this.label13.Text = "Amount of trees in the forest:";
+            // 
+            // tbResultPenalty
+            // 
+            this.tbResultPenalty.Location = new System.Drawing.Point(161, 33);
+            this.tbResultPenalty.Name = "tbResultPenalty";
+            this.tbResultPenalty.ReadOnly = true;
+            this.tbResultPenalty.Size = new System.Drawing.Size(61, 20);
+            this.tbResultPenalty.TabIndex = 10;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 36);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(45, 13);
+            this.label12.TabIndex = 9;
+            this.label12.Text = "Penalty:";
+            // 
+            // btnTest
+            // 
+            this.btnTest.Enabled = false;
+            this.btnTest.Location = new System.Drawing.Point(60, 185);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(138, 44);
+            this.btnTest.TabIndex = 8;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 135);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(71, 13);
+            this.label11.TabIndex = 7;
+            this.label11.Text = "Forest`s error:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 109);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(64, 13);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "Tree`s error:";
             // 
             // groupBox3
             // 
@@ -403,12 +506,18 @@
             // 
             // Tables
             // 
+            this.Tables.Controls.Add(this.tbCoefForest);
+            this.Tables.Controls.Add(this.tbCoefTree);
+            this.Tables.Controls.Add(this.tbSForest);
+            this.Tables.Controls.Add(this.tbSTree);
+            this.Tables.Controls.Add(this.tbS2Forest);
+            this.Tables.Controls.Add(this.tbS2Tree);
             this.Tables.Controls.Add(this.groupBox6);
-            this.Tables.Controls.Add(this.dataGridView1);
+            this.Tables.Controls.Add(this.dataGridTest);
             this.Tables.Location = new System.Drawing.Point(4, 22);
             this.Tables.Name = "Tables";
             this.Tables.Padding = new System.Windows.Forms.Padding(3);
-            this.Tables.Size = new System.Drawing.Size(928, 639);
+            this.Tables.Size = new System.Drawing.Size(1086, 639);
             this.Tables.TabIndex = 1;
             this.Tables.Text = "Tables";
             this.Tables.UseVisualStyleBackColor = true;
@@ -496,110 +605,55 @@
             this.btnDoTest.Text = "Start test!";
             this.btnDoTest.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dataGridTest
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 149);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(916, 484);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGridTest.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridTest.Location = new System.Drawing.Point(6, 149);
+            this.dataGridTest.Name = "dataGridTest";
+            this.dataGridTest.Size = new System.Drawing.Size(916, 484);
+            this.dataGridTest.TabIndex = 0;
             // 
-            // groupBox7
+            // tbS2Tree
             // 
-            this.groupBox7.Controls.Add(this.tbResultForestError);
-            this.groupBox7.Controls.Add(this.tbResultTreeError);
-            this.groupBox7.Controls.Add(this.tbResultAmountOfTrees);
-            this.groupBox7.Controls.Add(this.label13);
-            this.groupBox7.Controls.Add(this.tbResultPenalty);
-            this.groupBox7.Controls.Add(this.label12);
-            this.groupBox7.Controls.Add(this.btnTest);
-            this.groupBox7.Controls.Add(this.label11);
-            this.groupBox7.Controls.Add(this.label10);
-            this.groupBox7.Location = new System.Drawing.Point(826, 377);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(250, 257);
-            this.groupBox7.TabIndex = 11;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Result:";
+            this.tbS2Tree.Location = new System.Drawing.Point(952, 149);
+            this.tbS2Tree.Name = "tbS2Tree";
+            this.tbS2Tree.Size = new System.Drawing.Size(100, 20);
+            this.tbS2Tree.TabIndex = 3;
             // 
-            // label10
+            // tbS2Forest
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 109);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(64, 13);
-            this.label10.TabIndex = 5;
-            this.label10.Text = "Tree`s error:";
+            this.tbS2Forest.Location = new System.Drawing.Point(952, 176);
+            this.tbS2Forest.Name = "tbS2Forest";
+            this.tbS2Forest.Size = new System.Drawing.Size(100, 20);
+            this.tbS2Forest.TabIndex = 4;
             // 
-            // label11
+            // tbSTree
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 135);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(71, 13);
-            this.label11.TabIndex = 7;
-            this.label11.Text = "Forest`s error:";
+            this.tbSTree.Location = new System.Drawing.Point(952, 306);
+            this.tbSTree.Name = "tbSTree";
+            this.tbSTree.Size = new System.Drawing.Size(100, 20);
+            this.tbSTree.TabIndex = 5;
             // 
-            // btnTest
+            // tbSForest
             // 
-            this.btnTest.Enabled = false;
-            this.btnTest.Location = new System.Drawing.Point(60, 185);
-            this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(138, 44);
-            this.btnTest.TabIndex = 8;
-            this.btnTest.Text = "Test";
-            this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            this.tbSForest.Location = new System.Drawing.Point(952, 332);
+            this.tbSForest.Name = "tbSForest";
+            this.tbSForest.Size = new System.Drawing.Size(100, 20);
+            this.tbSForest.TabIndex = 6;
             // 
-            // label12
+            // tbCoefTree
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 36);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(45, 13);
-            this.label12.TabIndex = 9;
-            this.label12.Text = "Penalty:";
+            this.tbCoefTree.Location = new System.Drawing.Point(952, 416);
+            this.tbCoefTree.Name = "tbCoefTree";
+            this.tbCoefTree.Size = new System.Drawing.Size(100, 20);
+            this.tbCoefTree.TabIndex = 7;
             // 
-            // tbResultPenalty
+            // tbCoefForest
             // 
-            this.tbResultPenalty.Location = new System.Drawing.Point(161, 33);
-            this.tbResultPenalty.Name = "tbResultPenalty";
-            this.tbResultPenalty.ReadOnly = true;
-            this.tbResultPenalty.Size = new System.Drawing.Size(61, 20);
-            this.tbResultPenalty.TabIndex = 10;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 66);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(142, 13);
-            this.label13.TabIndex = 11;
-            this.label13.Text = "Amount of trees in the forest:";
-            // 
-            // tbResultAmountOfTrees
-            // 
-            this.tbResultAmountOfTrees.Location = new System.Drawing.Point(161, 60);
-            this.tbResultAmountOfTrees.Name = "tbResultAmountOfTrees";
-            this.tbResultAmountOfTrees.ReadOnly = true;
-            this.tbResultAmountOfTrees.Size = new System.Drawing.Size(61, 20);
-            this.tbResultAmountOfTrees.TabIndex = 12;
-            // 
-            // tbResultTreeError
-            // 
-            this.tbResultTreeError.Location = new System.Drawing.Point(161, 106);
-            this.tbResultTreeError.Name = "tbResultTreeError";
-            this.tbResultTreeError.ReadOnly = true;
-            this.tbResultTreeError.Size = new System.Drawing.Size(61, 20);
-            this.tbResultTreeError.TabIndex = 13;
-            // 
-            // tbResultForestError
-            // 
-            this.tbResultForestError.Location = new System.Drawing.Point(161, 132);
-            this.tbResultForestError.Name = "tbResultForestError";
-            this.tbResultForestError.ReadOnly = true;
-            this.tbResultForestError.Size = new System.Drawing.Size(61, 20);
-            this.tbResultForestError.TabIndex = 14;
+            this.tbCoefForest.Location = new System.Drawing.Point(952, 443);
+            this.tbCoefForest.Name = "tbCoefForest";
+            this.tbCoefForest.Size = new System.Drawing.Size(100, 20);
+            this.tbCoefForest.TabIndex = 8;
             // 
             // Form1
             // 
@@ -613,6 +667,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.RandomForestChart)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.Graphics.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -623,11 +679,10 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.Tables.ResumeLayout(false);
+            this.Tables.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridTest)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -671,7 +726,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnChooseTest;
         private System.Windows.Forms.Button btnDoTest;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridTest;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.TextBox tbResultForestError;
         private System.Windows.Forms.TextBox tbResultTreeError;
@@ -682,6 +737,12 @@
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox tbS2Forest;
+        private System.Windows.Forms.TextBox tbS2Tree;
+        private System.Windows.Forms.TextBox tbSForest;
+        private System.Windows.Forms.TextBox tbSTree;
+        private System.Windows.Forms.TextBox tbCoefForest;
+        private System.Windows.Forms.TextBox tbCoefTree;
     }
 }
 
